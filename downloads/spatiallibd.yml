@@ -1,0 +1,8 @@
+name: spatiallibd
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r=4.4
+  - bioconductor-spatiallibd=1.18
+  - bioconductor-zellkonverter=1.16

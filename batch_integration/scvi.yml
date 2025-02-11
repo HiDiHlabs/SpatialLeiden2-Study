@@ -1,0 +1,10 @@
+name: scvi
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - torch
+      - scvi-tools==1.2
+      - scanpy==1.10
