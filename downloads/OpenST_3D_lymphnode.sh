@@ -4,7 +4,7 @@
 # Schott, Marie, et al. "Open-ST: High-resolution spatial transcriptomics in 3D." Cell 187.15 (2024): 3953-3972.
 # https://doi.org/10.1016/j.cell.2024.05.055
 
-# from GEO GSE263498; https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE263498
+# from GEO GSE251926; https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE251926
 
 OUT_DIR=../data/3D_lymphnode
 
