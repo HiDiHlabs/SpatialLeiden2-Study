@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from anndata import AnnData
-
 SHELL = "/bin/bash"
 CONDA_PATH = "/opt/conda/bin/activate"
 
