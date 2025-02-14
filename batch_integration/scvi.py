@@ -54,6 +54,7 @@ def main():
     )
 
     scvi.settings.dl_num_workers = args.worker
+    scvi.settings.seed = args.seed
 
     adata = ad.read_h5ad(args.input)
     adata.layers["counts"] = adata.X
