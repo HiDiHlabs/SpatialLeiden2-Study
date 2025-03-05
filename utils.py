@@ -6,6 +6,8 @@ CONDA_PATH = "/opt/conda/bin/activate"
 DATA_DIR = Path("data")
 RESULT_DIR = Path("results")
 
+mm = 0.1 / 2.54
+
 
 def activate_env_cmd(env: str) -> str:
     return f"source {CONDA_PATH} {env}"
