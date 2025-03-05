@@ -1,0 +1,10 @@
+name: gif
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pandas=2
+  - pyarrow
+  - celluloid=0.2
+  - seaborn
+  - colorcet
