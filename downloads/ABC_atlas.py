@@ -12,6 +12,7 @@ data_path = Path("../data/ABC_atlas")
 
 # download data
 abc_cache = AbcProjectCache.from_cache_dir(download_base)
+abc_cache.load_manifest("releases/20250131/manifest.json")
 
 expression_file = abc_cache.get_data_path(
     directory="Zhuang-ABCA-1", file_name="Zhuang-ABCA-1/raw"
@@ -21,14 +22,29 @@ cell_file = abc_cache.get_metadata_path(
     directory="Zhuang-ABCA-1", file_name="cell_metadata_with_cluster_annotation"
 )
 
-ccf_file = abc_cache.get_metadata_path(
-    directory="Zhuang-ABCA-1-CCF", file_name="ccf_coordinates"
+# download CCF annotation
+parcellation = abc_cache.get_metadata_dataframe(
+    directory="Allen-CCF-2020",
+    file_name="parcellation_to_parcellation_term_membership_acronym",
+    index_col="parcellation_index",
+).astype("category")
+
+ccf = (
+    abc_cache.get_metadata_dataframe(
+        directory="Zhuang-ABCA-1-CCF",
+        file_name="ccf_coordinates",
+        index_col="cell_label",
+    )
+    .rename(columns={"x": "x_ccf", "y": "y_ccf", "z": "z_ccf"})
+    .join(parcellation, on="parcellation_index")
 )
+
+ccf.to_csv(data_path / "CCF.tsv", sep="\t")
 
 
 # prepare anndata object
 coord_columns = ["x", "y", "z"]
-cell_meta_columns = ["neurotransmitter", "class", "subclass"]
+cell_meta_columns = ["neurotransmitter", "class", "subclass", "supertype", "cluster"]
 
 adata = ad.read_h5ad(expression_file)
 adata.X = csr_matrix(adata.X)
