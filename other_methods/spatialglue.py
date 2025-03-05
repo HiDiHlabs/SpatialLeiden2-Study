@@ -9,7 +9,7 @@ def main():
     parser.add_argument("input", help="Path to mudata file.", type=Path)
     parser.add_argument("output", help="Path to output parquet-file.", type=Path)
     parser.add_argument(
-        "--n_neighs", help="Number of neighbors", required=False, type=int, default=8
+        "--n_neighs", help="Number of neighbors", required=False, type=int, default=4
     )
     parser.add_argument(
         "--seed", help="Seed for randomness.", required=False, type=int, default=42
