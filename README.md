@@ -5,6 +5,14 @@ Multi-sample and Multi-omics integration study using SpatialLeiden
 
 TODO: add link to preprint/publication
 
+## Contribution
+
+When contributing to this repository please ensure that
+
+- before you commit a notebook (ipynb) you remove all outputs to ensure that the file sizes and commits don't explode
+- install [pre-commit](https://pre-commit.com/) and run it when comitting. This can be acheived with a git hook.
+  Just follow the [documentation](https://pre-commit.com/#3-install-the-git-hook-scripts). 
+
 ## Environments
 
 Conda environment configuration files (all .yml files) are available where needed.
