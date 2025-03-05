@@ -4,4 +4,4 @@ fix = true
 show-fixes = true
 
 [lint]
-select = ["I"]
+extend-select = ["I"]
