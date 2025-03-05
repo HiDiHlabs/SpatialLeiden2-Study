@@ -14,15 +14,17 @@ def preprocess_genes(
     )
 
 
-def preprocess_scaling(adata: AnnData, n_pcs: int = 30, seed: int = SEED):
+def preprocess_scaling(
+    adata: AnnData, n_pcs: int = 30, center: bool = False, seed: int = SEED
+):
     import scanpy as sc
 
     layer = "scaled"
     adata.layers[layer] = adata.X.copy()
     sc.pp.normalize_total(adata, layer=layer)
     sc.pp.log1p(adata, layer=layer)
-    # sc.pp.scale(adata, zero_center=False)
-    sc.pp.pca(adata, n_comps=n_pcs, zero_center=True, random_state=seed, layer=layer)
+    sc.pp.scale(adata, layer=layer, zero_center=center)
+    sc.pp.pca(adata, n_comps=n_pcs, zero_center=center, random_state=seed, layer=layer)
 
 
 def preprocess_neighbors(
