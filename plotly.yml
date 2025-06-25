@@ -1,0 +1,14 @@
+name: plotly
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - ipykernel
+  - plotly
+  - pandas
+  - pyarrow
+  - colorcet
+  - nbformat
+  - pip
+  - pip:
+      - kaleido
