@@ -29,17 +29,21 @@ parcellation = abc_cache.get_metadata_dataframe(
     index_col="parcellation_index",
 ).astype("category")
 
-ccf = (
-    abc_cache.get_metadata_dataframe(
-        directory="Zhuang-ABCA-1-CCF",
-        file_name="ccf_coordinates",
-        index_col="cell_label",
-    )
-    .rename(columns={"x": "x_ccf", "y": "y_ccf", "z": "z_ccf"})
-    .join(parcellation, on="parcellation_index")
-)
+parcellation_color = abc_cache.get_metadata_dataframe(
+    directory="Allen-CCF-2020",
+    file_name="parcellation_to_parcellation_term_membership_color",
+    index_col="parcellation_index",
+).astype("category")
 
-ccf.to_csv(data_path / "CCF.tsv", sep="\t")
+parcellation.join(parcellation_color).to_csv(data_path / "parcellation.tsv", sep="\t")
+
+abc_cache.get_metadata_dataframe(
+    directory="Zhuang-ABCA-1-CCF",
+    file_name="ccf_coordinates",
+    index_col="cell_label",
+).rename(columns={"x": "x_ccf", "y": "y_ccf", "z": "z_ccf"}).to_csv(
+    data_path / "CCF.tsv", sep="\t"
+)
 
 
 # prepare anndata object
