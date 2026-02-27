@@ -1,8 +1,0 @@
-name: spatialleiden_benchmark
-channels:
-  - conda-forge
-  - bioconda
-dependencies:
-  - python=3.12
-  - spatialleiden=0.2
-  - anndata=0.10

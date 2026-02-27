@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
 import argparse
+import warnings
 from pathlib import Path
+
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 def main():
@@ -67,15 +70,13 @@ def main():
         adata,
         n_cluster,
         latent_kwargs={
-            "flavor": "leidenalg",
             "directed": False,
             "random_state": args.seed,
-            "obsp": "connectivities",
         },
         spatial_kwargs={
             "directed": (False, directed),
             "layer_ratio": args.weight,
-            "seed": args.seed,
+            "random_state": args.seed,
         },
     )
 

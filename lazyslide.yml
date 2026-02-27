@@ -1,0 +1,20 @@
+name: spatialleiden
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - ipykernel
+  - ipywidgets
+  - mudata
+  - spatialleiden=0.4
+  - scanpy=1.10
+  - anndata=0.12
+  - pandas=2
+  - pip
+  - pip:
+      - torch~=2.0
+      - squidpy~=1.6.0
+      - spatialdata-io
+      - lazyslide[all]~=0.9.1
+      - scikit-misc

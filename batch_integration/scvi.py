@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
 import argparse
+import warnings
 from pathlib import Path
+
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 def main():

@@ -5,6 +5,5 @@ dependencies:
   - python=3.12
   - pip
   - pip:
-      - torch
-      - scvi-tools==1.2
-      - scanpy==1.10
+      - scanpy==1.10.4
+      - scvi-tools[cuda]~=1.2.0

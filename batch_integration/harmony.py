@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
 import argparse
+import warnings
 from pathlib import Path
+
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 def main():
@@ -24,17 +27,17 @@ def main():
     args = parser.parse_args()
 
     import anndata as ad
-    import scanpy.external as sce
+    import harmonypy as hm
     from multisample_utils import preprocess_neighbors
     from scipy.sparse import save_npz
 
     adata = ad.read_h5ad(args.input)
-    sce.pp.harmony_integrate(
-        adata,
-        key=adata.uns["batch_keys"],
-        basis="X_pca",
-        adjusted_basis="X_pca_harmony",
+
+    harmony_result = hm.run_harmony(
+        adata.obsm["X_pca"], adata.obs, adata.uns["batch_keys"], random_state=args.seed
     )
+    adata.obsm["X_pca_harmony"] = harmony_result.Z_corr
+
     preprocess_neighbors(
         adata, obsm_key="X_pca_harmony", n_neighbors=args.n_neighs, seed=args.seed
     )

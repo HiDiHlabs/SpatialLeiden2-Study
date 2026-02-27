@@ -19,10 +19,11 @@ def remove_tick_and_label(ax):
 # Plotting utils
 mm = 0.1 / 2.54
 
-fontsize = 6
+fontsize = 5
+fontsize_l = 7
 rc_params = {
-    "axes.titlesize": fontsize,
-    "axes.labelsize": fontsize,
+    "axes.titlesize": fontsize_l,
+    "axes.labelsize": fontsize_l,
     "xtick.labelsize": fontsize,
     "ytick.labelsize": fontsize,
     "legend.fontsize": fontsize,

@@ -9,9 +9,6 @@ def main():
     parser.add_argument("input", help="Path to mudata file.", type=Path)
     parser.add_argument("output", help="Path to output parquet-file.", type=Path)
     parser.add_argument(
-        "--n_neighs", help="Number of neighbors", required=False, type=int, default=4
-    )
-    parser.add_argument(
         "--seed", help="Seed for randomness.", required=False, type=int, default=42
     )
 
@@ -40,32 +37,22 @@ def main():
     adata1 = mdata.mod["RNA"]
     adata2 = mdata.mod["ADT"]
 
-    n_comps = adata2.n_vars - 1  # tutorial, seems high
-    # n_comps = adata2.n_vars // 2
+    # process according to tutorial
+    # https://github.com/JinmiaoChenLab/SpatialGlue_tutorials/blob/main/docs/source/Tutorial%205_data%20integration%20for%20triplet%20omics%20data%20(Simulation).ipynb
+    n_protein = adata2.n_vars
 
     # RNA
-    sc.pp.filter_genes(adata1, min_cells=10)
-    # sc.pp.highly_variable_genes(adata1, flavor="seurat_v3", n_top_genes=3000)
-    sc.pp.normalize_total(adata1)
+    sc.pp.highly_variable_genes(adata1, flavor="seurat_v3", n_top_genes=3_000)
+    sc.pp.normalize_total(adata1, target_sum=1e4)
     sc.pp.log1p(adata1)
-    sc.pp.scale(adata1)
-    adata1.obsm["feat"] = pca(adata1, n_comps=n_comps)
+    adata1.obsm["feat"] = pca(adata1, n_comps=n_protein)
 
     # Protein
     adata2 = clr_normalize_each_cell(adata2)
-    sc.pp.scale(adata2)
-    adata2.obsm["feat"] = pca(adata2, n_comps=n_comps)
+    adata2.obsm["feat"] = pca(adata2, n_comps=n_protein)
 
-    data = construct_neighbor_graph(
-        adata1, adata2, datatype=None, n_neighbors=args.n_neighs
-    )
-    model = Train_SpatialGlue(
-        data,
-        device=device,
-        datatype=None,
-        random_seed=args.seed,
-        weight_factors=[1, 10, 1, 10],  # weights?
-    )
+    data = construct_neighbor_graph(adata1, adata2)
+    model = Train_SpatialGlue(data, device=device, random_seed=args.seed, epochs=200)
 
     # train model
     output = model.train()

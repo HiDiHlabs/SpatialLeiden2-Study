@@ -1,6 +1,6 @@
-name: no_batch_integration
+name: vips
 channels:
   - conda-forge
 dependencies:
   - python=3.12
-  - scanpy=1.10
+  - pyvips=3
