@@ -3,7 +3,11 @@
 This repository contains all code to reproduce the results from the
 Multi-sample and Multi-modal integration study using SpatialLeiden
 
-TODO: add link to preprint/publication
+Müller-Bötticher, N., Malt, A., Kiessling, P., Eils, R., Kuppe, C., & Ishaque, N.
+(2026).
+Atlas-scale spatially aware clustering with support for 3D and multimodal data using SpatialLeiden.
+_bioRxiv_.
+https://doi.org/10.64898/2026.02.27.708246
 
 ## Contribution
 
