@@ -5,8 +5,7 @@
 # onto the Visium spots. The raw MSI csv files in sma/ are still in MSI pixel coordinates
 # (rotated and shifted relative to Visium), so this is the registered version to use.
 #
-# Run with the r44_seurat env from the SpatialLeiden2-Study folder:
-#   /dh-projects/ag-ishaque/analysis/malta/envs/envs/r44_seurat/bin/Rscript Cosie_Clustering/00_export_msi_spots.R
+
 
 suppressMessages({
   library(Seurat)
