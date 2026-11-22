@@ -1,0 +1,32 @@
+# DeepSpot-M TCGA-BRCA retrieve → MultiLeiden MuData
+# Create: conda env create -f TCGA_BRCA/download_deepspotm_tcga.yml
+# Activate: conda activate download_deepspotm_tcga
+# Also: huggingface-cli login (atlas is gated); accept dataset terms on HF.
+
+name: download_deepspotm_tcga
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.10,<3.13
+  - pip
+  - huggingface_hub
+  - pandas
+  - numpy
+  - openpyxl
+  - scipy
+  - anndata
+  - mudata
+  - scanpy
+  # squidpy 1.7.x imports removed scanpy private `_set_default_colors_…`; need 1.8+
+  - squidpy>=1.8.0
+  - pillow
+  - openslide
+  - openslide-python
+  - pytorch
+  - torchvision
+  - timm
+  - pip:
+      - deepspotm
+      - datasets
+      - spatialleiden>=0.4.0

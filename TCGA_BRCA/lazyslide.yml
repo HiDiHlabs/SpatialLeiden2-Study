@@ -1,0 +1,14 @@
+name: lazyslide
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.10
+  - pip
+  - numpy
+  - pandas
+  - pillow
+  - scikit-learn
+  - scanpy
+  - anndata
+  - pip:
+      - lazyslide
