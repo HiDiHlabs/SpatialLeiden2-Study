@@ -1,0 +1,23 @@
+# TRICARE depth-plane tiling via lazyslide (non-overlapping grid; CPU).
+# Create: conda env create -f TRICARE_3D/tricare_tile.yml
+# Activate: conda activate tricare_tile
+# Matches SpatialLeiden2-Study VisiumHD: zs.pp.find_tissues + zs.pp.tile_tissues
+
+name: tricare_tile
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pandas=2
+  - numpy
+  - anndata
+  - mudata
+  - h5py
+  - pillow
+  - tifffile
+  - scikit-learn
+  - pip:
+      # [all] pulls tiffslide/openslide backends; TRICARE planes are flat TIFFs
+      - "lazyslide[all]"
+      - tiffslide

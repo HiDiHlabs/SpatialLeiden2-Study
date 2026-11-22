@@ -1,0 +1,19 @@
+# TRICARE Zenodo download → MuData (stage: download).
+# Create: conda env create -f TRICARE_3D/download_tricare.yml
+# Activate: conda activate download_tricare
+# Other stages: environment_tile.yaml, environment_univ2.yaml, environment_multileiden.yaml
+
+name: download_tricare
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.9,<3.12
+  - pip
+  - pandas
+  - numpy
+  - anndata
+  - mudata
+  - h5py
+  - pillow
+  - tifffile
+  - py7zr

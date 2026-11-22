@@ -1,0 +1,27 @@
+# TRICARE Multileiden / SpatialLeiden2 (HE + 3D spatial).
+# Mirrors HiDiHlabs/SpatialLeiden2-Study spatialleiden.yml (preprint), without
+# squidpy (squidpy→spatialdata sets dask query-planning=False and crashes on
+# modern dask with: NotImplementedError: The legacy implementation is no longer supported).
+# Create: conda env create -f TRICARE_3D/tricare_multileiden.yml
+# Activate: conda activate tricare_multileiden
+#
+# If GLIBCXX_3.4.30 missing against /lib64/libstdc++.so.6:
+#   conda install -y -c conda-forge "libstdcxx-ng>=12" scipy
+#   export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
+
+name: tricare_multileiden
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - pip
+  - libstdcxx-ng>=12
+  - scipy
+  - numpy
+  - pandas=2
+  - mudata
+  - spatialleiden=0.4
+  - scanpy=1.10
+  - anndata=0.10
+  - "dask=2024.11.2"

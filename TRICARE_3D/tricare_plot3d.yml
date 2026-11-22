@@ -1,0 +1,22 @@
+# TRICARE 3D SpatialLeiden2-style figures (FacetGrid + GIF).
+# Create: conda env create -f TRICARE_3D/tricare_plot3d.yml
+# Activate: conda activate tricare_plot3d
+
+name: tricare_plot3d
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pandas=2
+  - numpy
+  - matplotlib
+  - seaborn
+  - colorcet
+  - pyarrow
+  - anndata
+  - mudata
+  - pillow
+  - tifffile
+  - pip:
+      - celluloid==0.2.0

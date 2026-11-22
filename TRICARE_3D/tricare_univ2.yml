@@ -1,0 +1,23 @@
+# TRICARE UNI2 feature extraction (GPU recommended).
+# Create: conda env create -f TRICARE_3D/tricare_univ2.yml
+# Activate: conda activate tricare_univ2
+# Needs UNI2 weights: directory with pytorch_model.bin (--model-dir / UNIV2_MODEL_DIR).
+
+name: tricare_univ2
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.12
+  - pip
+  - pandas=2
+  - numpy
+  - anndata
+  - h5py
+  - pillow
+  - tqdm
+  - pytorch
+  - torchvision
+  - pip:
+      - timm
+      - huggingface_hub
