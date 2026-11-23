@@ -1,0 +1,13 @@
+name: survival
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pandas
+  - openpyxl
+  - lifelines
+  - scikit-survival
+  - matplotlib
+  - seaborn
+  - scipy
+  - statsmodels

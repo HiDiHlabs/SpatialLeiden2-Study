@@ -11,6 +11,7 @@ Download / HE / MuData live under `downloads/`; this folder holds Multileiden cl
 conda env create -f downloads/download_deepspotm_tcga.yml
 conda env create -f downloads/lazyslide.yml
 conda env create -f downloads/univ2.yml
+conda env create -f survival.yml
 conda activate download_deepspotm_tcga
 huggingface-cli login   # accept terms for ratschlab/TCGA_virtual_spatial_transcriptomics_atlas
 # UNI2 weights: directory containing pytorch_model.bin
@@ -38,8 +39,16 @@ python TCGA_BRCA/spatialleiden_mudata_run.py \
   --layer-weights rna:1.5,HE:0.5,spatial:2
 ```
 
+Filter the clinical CSV + CDR Excel to the patients in `selected_sample_ids.txt`
+(writes `*_selected.csv`, `*_selected.xlsx`, `missing_patients.txt` into `clinical/`):
+
+```bash
+conda activate survival
+python3 TCGA_BRCA/filter_clinical_selected.py
+```
+
 ## Notes
 
 - Clinical: TCGA-CDR OS + PFI; default stages II/III; primary diagnostic DX slides.
 - Gene filter off by default; optional `--pcc-cameo` / `--pcc-filter`.
-- Envs: `download_deepspotm_tcga` (select/fetch/mudata), `lazyslide` (tile), `univ2` (HE features).
+- Envs: `download_deepspotm_tcga` (select/fetch/mudata), `lazyslide` (tile), `univ2` (HE features), `survival` (clinical filtering + survival analysis).
