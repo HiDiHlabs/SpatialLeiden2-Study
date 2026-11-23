@@ -1,0 +1,4 @@
+slide,label,spots,genes_in_file,median_genes_per_spot,collectri_tfs_total,tfs_with_ge1_target_in_slide,tfs_passing_tmin,tfs_scored,median_targets_per_tf,median_targets_detected_per_spot_per_tf,median_frac_spots_ge5_targets_detected,frac_scores_padj_lt_0.05,tfs_scored_in_all_three
+10X001,P1 control (10X001),4269,15730,1649.0,1185,1124,681,681,18.0,3.0,0.15507144530334974,0.14919566632922732,673
+ACH0013,P9 IZ rep2 (ACH0013),4113,17708,3458.0,1185,1132,693,693,19.0,6.0,0.6975443715049842,0.29059130080282525,673
+ACH0012,P9 IZ (ACH0012),4361,15972,1985.0,1185,1122,679,679,19.0,4.0,0.30658105939004815,0.22651470609590496,673

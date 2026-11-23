@@ -5,7 +5,7 @@ Things that surprised us, or that need handling before the data can be used. Wri
 ## Where the usable Visium data is
 
 1. **The Zenodo "Processed Data 1" Visium files (`Visium_*.h5ad`) are not enough on their own.**
-   - They are in CELLxGENE schema 2.0. `X` is log-normalized and the raw counts are in `.raw`. They hold 13,490 genes.
+   - They are in CELLxGENE schema 2.0. `X` is log-normalized and the raw counts are in `.raw`. The gene count differs per file (13,490 to 17,708; e.g. FZ_P18 13,490, GT/IZ_P9_rep2 17,708), and the files contain **no mitochondrial (`MT-`) genes**, although the `.raw` totals equal the authors' `nCount_Spatial`. The mitochondrial fraction therefore cannot be recomputed from the h5ad; use the authors' `percent.mt`.
    - They do not contain the published cell-type or molecular niches.
    - Spot coordinates (`obsm["X_spatial"]`) are rescaled to 0–1, separately along x and y. This can distort the hexagonal grid.
    - They contain no image.
