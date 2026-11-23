@@ -234,7 +234,10 @@ for (p, z), grp in st1.groupby(["patient", "zone"]):
         edgecolor=ZONE_COL[z],
     )
     if len(grp) > 1:
-        ax.text(x + 0.22, y, f"×{len(grp)}", va="center", ha="left", fontsize=5.5)
+        # same sample ID listed twice = replicate sections (merged in the paper, n = 27)
+        rep = grp.patient_region_id.nunique() < len(grp)
+        label = f"×{len(grp)} rep." if rep else f"×{len(grp)}"
+        ax.text(x + 0.22, y, label, va="center", ha="left", fontsize=5.5)
 ax.set_xticks(range(len(ZONES)), [ZONE_LABEL[z] for z in ZONES])
 ax.xaxis.tick_top()
 ax.set_xlim(-0.6, len(ZONES) - 0.4)
@@ -245,12 +248,28 @@ for s in ax.spines.values():
     s.set_visible(False)
 # sample counts per zone, below the grid
 counts = st1.groupby("zone").size().reindex(ZONES)
-vcounts = st1[st1.visium].groupby("zone").size().reindex(ZONES).fillna(0).astype(int)
+# Visium sections: replicate runs of one sample ID (RZ_P6) count once, as in the paper (n = 27)
+vcounts = (
+    st1[st1.visium]
+    .drop_duplicates("patient_region_id")
+    .groupby("zone")
+    .size()
+    .reindex(ZONES)
+    .fillna(0)
+    .astype(int)
+)
 for i, z in enumerate(ZONES):
     ax.text(i, n + 0.4, f"{counts[z]}", ha="center", va="top", fontsize=6)
     ax.text(i, n + 1.5, f"{vcounts[z]}", ha="center", va="top", fontsize=6)
-ax.text(-0.75, n + 0.4, "Samples", ha="right", va="top", fontsize=6)
-ax.text(-0.75, n + 1.5, "with Visium", ha="right", va="top", fontsize=6)
+ax.text(-0.75, n + 0.4, f"Samples ({counts.sum()})", ha="right", va="top", fontsize=6)
+ax.text(
+    -0.75,
+    n + 1.5,
+    f"Visium sections ({vcounts.sum()})",
+    ha="right",
+    va="top",
+    fontsize=6,
+)
 
 # b: days after symptom onset (log scale)
 d = donors.dropna(subset=["days"])
@@ -298,6 +317,13 @@ handles = [
         label="snRNA-seq only",
     ),
     Line2D([], [], ls="", marker="", label="×2  two samples\n      of one zone"),
+    Line2D(
+        [],
+        [],
+        ls="",
+        marker="",
+        label="rep.  replicate sections,\n      merged in the paper",
+    ),
 ]
 fig.legend(
     handles=handles,
