@@ -1,5 +1,5 @@
 # DeepSpot-M TCGA-BRCA retrieve → MultiLeiden MuData
-# Create: conda env create -f TCGA_BRCA/download_deepspotm_tcga.yml
+# Create: conda env create -f downloads/download_deepspotm_tcga.yml
 # Activate: conda activate download_deepspotm_tcga
 # Also: huggingface-cli login (atlas is gated); accept dataset terms on HF.
 

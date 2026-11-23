@@ -3,26 +3,28 @@
 SpatialLeiden2-style multimodal clustering on DeepSpot-M virtual ST for TCGA-BRCA:
 `MuData({"rna", "HE"})` + `spatialleiden.spatialleiden_multimodal`.
 
+Download / HE / MuData live under `downloads/`; this folder holds Multileiden clustering.
+
 ## Setup
 
 ```bash
-conda env create -f TCGA_BRCA/download_deepspotm_tcga.yml
-conda env create -f TCGA_BRCA/lazyslide.yml
-conda env create -f TCGA_BRCA/univ2.yml
+conda env create -f downloads/download_deepspotm_tcga.yml
+conda env create -f downloads/lazyslide.yml
+conda env create -f downloads/univ2.yml
 conda activate download_deepspotm_tcga
 huggingface-cli login   # accept terms for ratschlab/TCGA_virtual_spatial_transcriptomics_atlas
 # UNI2 weights: directory containing pytorch_model.bin
 export MODEL_DIR=./models
 ```
 
-## Run (SLURM)
+## Download (SLURM)
 
 ```bash
 export OUT_DIR=./data/TCGA_BRCA
 export MODEL_DIR=./models
 export MAX_PATIENTS=100
-bash TCGA_BRCA/submit_deepspotm_tcga_brca_slurm.sh all
-# Debug one sample: bash TCGA_BRCA/submit_deepspotm_tcga_brca_slurm.sh test
+bash downloads/submit_deepspotm_tcga_brca_slurm.sh all
+# Debug one sample: bash downloads/submit_deepspotm_tcga_brca_slurm.sh test
 ```
 
 Pipeline per HE array task: fetch SVS → lazyslide tiles (`non_overlap` default) → UNI2 → `he_embeddings/{id}.npy` → MuData.

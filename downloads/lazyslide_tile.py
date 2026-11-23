@@ -8,7 +8,7 @@ Writes JPEG tiles and an AnnData with obs tile_path / tile_name (same layout
 as the former colo_snake_tile / her2_snake_tile outputs).
 
 Example:
-  python TCGA_BRCA/lazyslide_tile.py \\
+  python downloads/lazyslide_tile.py \\
     -p Valdeolivas2024 -s ZEN48 --crop_size hest \\
     --tiles Valdeolivas2024_out/data/hest/tiles/ZEN48 \\
     --adata_out Valdeolivas2024_out/data/hest/tiles/ZEN48.h5ad

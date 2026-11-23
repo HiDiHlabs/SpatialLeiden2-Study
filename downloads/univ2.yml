@@ -1,5 +1,5 @@
 # UNI2 feature extraction for TCGA-BRCA HE tiles (GPU recommended).
-# Create: conda env create -f TCGA_BRCA/univ2.yml
+# Create: conda env create -f downloads/univ2.yml
 # Activate: conda activate univ2
 # Needs UNI2 weights: directory with pytorch_model.bin (MODEL_DIR / --model-dir).
 

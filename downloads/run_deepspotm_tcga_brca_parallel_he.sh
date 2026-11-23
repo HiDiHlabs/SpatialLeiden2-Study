@@ -4,12 +4,12 @@
 #   (--delete-svs to remove after HE).
 #
 # Prerequisite: envs download_deepspotm_tcga + lazyslide + univ2; huggingface-cli login;
-# Prefer: bash TCGA_BRCA/submit_deepspotm_tcga_brca_slurm.sh he
+# Prefer: bash downloads/submit_deepspotm_tcga_brca_slurm.sh he
 #               UNI2: MODEL_DIR directory with pytorch_model.bin (default: ./models).
 #
 # From repo root:
-#   bash TCGA_BRCA/run_deepspotm_tcga_brca_parallel_he.sh --help
-#   bash TCGA_BRCA/run_deepspotm_tcga_brca_parallel_he.sh \
+#   bash downloads/run_deepspotm_tcga_brca_parallel_he.sh --help
+#   bash downloads/run_deepspotm_tcga_brca_parallel_he.sh \
 #     --out-dir ./data/TCGA_BRCA --max-patients 100 --jobs 1
 set -euo pipefail
 
@@ -80,7 +80,7 @@ Per sample (default --jobs 1): download atlas h5ad (if needed) → download SVS
 → UNI2 HE → delete SVS → next sample. No bulk SVS queue.
 
 Usage:
-  bash TCGA_BRCA/run_deepspotm_tcga_brca_parallel_he.sh [flags]
+  bash downloads/run_deepspotm_tcga_brca_parallel_he.sh [flags]
 
 I/O
   --out-dir DIR              Output root (default: ./data/TCGA_BRCA)
@@ -177,7 +177,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-SCRIPT="TCGA_BRCA/retrieve_deepspotm_tcga_brca.py"
+SCRIPT="downloads/retrieve_deepspotm_tcga_brca.py"
 SEL="${OUT_DIR}/selected_slides.csv"
 IDS="${OUT_DIR}/selected_sample_ids.txt"
 LOG_DIR="${OUT_DIR}/logs/he"

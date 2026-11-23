@@ -42,12 +42,12 @@ Breast v1 panel only (genes outside the panel cannot be PCC-filtered this way).
 
 Usage
 -----
-  conda env create -f TCGA_BRCA/download_deepspotm_tcga.yml
+  conda env create -f downloads/download_deepspotm_tcga.yml
   conda activate download_deepspotm_tcga
   huggingface-cli login
 
   # Stage II/III + 1:1 PFI event:censored + UNI2 HE → MuData
-  python TCGA_BRCA/retrieve_deepspotm_tcga_brca.py \\
+  python downloads/retrieve_deepspotm_tcga_brca.py \\
     --out-dir ./data/TCGA_BRCA \\
     --download-svs \\
     --he-encoder univ2 \\
@@ -57,7 +57,7 @@ Usage
     --max-patients 100
 
   # assemble only (predictions + HE npy already present)
-  python TCGA_BRCA/retrieve_deepspotm_tcga_brca.py \\
+  python downloads/retrieve_deepspotm_tcga_brca.py \\
     --out-dir ./data/TCGA_BRCA --stage mudata
 """
 
@@ -73,10 +73,13 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-# Ensure sibling scripts (e.g. multileiden_mudata) resolve when invoked via absolute path.
+# Sibling download helpers + TCGA_BRCA Multileiden builders.
 _SCRIPTS_DIR = Path(__file__).resolve().parent
-if str(_SCRIPTS_DIR) not in sys.path:
-    sys.path.insert(0, str(_SCRIPTS_DIR))
+_REPO_ROOT = _SCRIPTS_DIR.parent
+_TCGA_DIR = _REPO_ROOT / "TCGA_BRCA"
+for _p in (_SCRIPTS_DIR, _TCGA_DIR):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
 
 ATLAS_REPO = "ratschlab/TCGA_virtual_spatial_transcriptomics_atlas"
 CAMEO_BREAST_REPO = "theislab/CAMEO-Breast"
@@ -149,7 +152,7 @@ def load_tcga_cdr(path: Path) -> pd.DataFrame:
     except ImportError as e:
         raise SystemExit(
             "Reading TCGA-CDR .xlsx requires openpyxl. "
-            "pip/conda install openpyxl (see TCGA_BRCA/download_deepspotm_tcga.yml)"
+            "pip/conda install openpyxl (see downloads/download_deepspotm_tcga.yml)"
         ) from e
     # Column names vary slightly across mirrors; normalize.
     lower = {c.lower(): c for c in df.columns}
@@ -532,7 +535,7 @@ def compute_gene_pcc_cameo_breast(
     except ImportError as e:
         raise SystemExit(
             "datasets is required for --pcc-cameo. "
-            "conda env update -f TCGA_BRCA/download_deepspotm_tcga.yml"
+            "conda env update -f downloads/download_deepspotm_tcga.yml"
         ) from e
     try:
         from deepspotm import DeepSpotM
@@ -887,7 +890,7 @@ def assemble_mudata(
         from multileiden_mudata import build_gene_he_mudata
     except ImportError as e:
         raise SystemExit(
-            f"Cannot import multileiden_mudata from {_SCRIPTS_DIR} "
+            f"Cannot import multileiden_mudata from {_TCGA_DIR} "
             "(needed only for --stage mudata / all). "
             f"Ensure TCGA_BRCA/multileiden_mudata.py is present. ({e})"
         ) from e

@@ -12,7 +12,7 @@
 # From repo root (after HF login + UNI2 weights):
 #   export OUT_DIR=./data/TCGA_BRCA
 #   export MODEL_DIR=models
-#   bash TCGA_BRCA/submit_deepspotm_tcga_brca_slurm.sh all
+#   bash downloads/submit_deepspotm_tcga_brca_slurm.sh all
 #
 # Stages:
 #   all | select | he | mudata
