@@ -69,6 +69,8 @@ Derived_Modalities/
 │   └── functional_only_example/
 ├── 06_metrics_exploration/          new metrics
 ├── common/                          shared helper code
+├── figures/                         finished figures (PDF + PNG + caption)
+├── handoff/                         dated handoff notes
 ├── downloads/                       download script per dataset
 ├── envs/                            conda environment files
 ├── notes/                           meeting notes and decisions
