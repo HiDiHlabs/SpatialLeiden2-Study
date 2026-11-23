@@ -1,0 +1,22 @@
+slide,run,source,key,n_domains,coherence_edge_weighted,median,share_spots_gt0
+10X001,RNA only,exp0_k_celltype_niche,r0_s0,8.0,0.384,,
+10X001,RNA + space,exp0_k_celltype_niche,r0.75_s0,8.0,0.779,,
+10X001,Metabolic only,exp0met_k_celltype_niche,r0_s0,8.0,0.22,,
+10X001,Metabolic + space,exp0met_k_celltype_niche,r0.75_s0,8.0,0.497,,
+10X001,RNA + metab. + space,mm_configs,rna_met_s0,8.0,0.718,,
+10X001,Fatty-acid oxidation (palmitate degr.),task activity,,,,0.626,1.0
+10X001,Anaerobic glycolysis (hypoxic ATP),task activity,,,,5.547,1.0
+ACH0012,RNA only,exp0_k_celltype_niche,r0_s0,8.0,0.747,,
+ACH0012,RNA + space,exp0_k_celltype_niche,r0.75_s0,8.0,0.906,,
+ACH0012,Metabolic only,exp0met_k_celltype_niche,r0_s0,8.0,0.455,,
+ACH0012,Metabolic + space,exp0met_k_celltype_niche,r0.75_s0,8.0,0.791,,
+ACH0012,RNA + metab. + space,mm_configs,rna_met_s0,8.0,0.815,,
+ACH0012,Fatty-acid oxidation (palmitate degr.),task activity,,,,0.548,1.0
+ACH0012,Anaerobic glycolysis (hypoxic ATP),task activity,,,,5.624,1.0
+ACH0013,RNA only,exp0_k_celltype_niche,r0_s0,9.0,0.585,,
+ACH0013,RNA + space,exp0_k_celltype_niche,r0.75_s0,9.0,0.73,,
+ACH0013,Metabolic only,exp0met_k_celltype_niche,r0_s0,9.0,0.333,,
+ACH0013,Metabolic + space,exp0met_k_celltype_niche,r0.75_s0,9.0,0.59,,
+ACH0013,RNA + metab. + space,mm_configs,rna_met_s0,9.0,0.674,,
+ACH0013,Fatty-acid oxidation (palmitate degr.),task activity,,,,0.492,1.0
+ACH0013,Anaerobic glycolysis (hypoxic ATP),task activity,,,,4.882,1.0

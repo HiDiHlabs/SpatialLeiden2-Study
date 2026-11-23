@@ -1,0 +1,94 @@
+path,set,zenodo_record,modality,sample,zone,patient,n_obs,n_vars,size_gb,loaded,note
+he_images/157771_2019AKK006.tif,he_images,6778620,H&E image,control_P1,CTRL,P1,,,0.186,yes,7874 x 7874 px
+he_images/157772_2019AKK004.tif,he_images,6778620,H&E image,FZ/GT_P4,FZ,P4,,,0.186,yes,7874 x 7874 px
+he_images/157775_2019AKK003.tif,he_images,6778620,H&E image,IZ/BZ_P2,IZ,P2,,,0.186,yes,7874 x 7874 px
+he_images/157777_2019AKK003.tif,he_images,6778620,H&E image,RZ/BZ_P2,BZ,P2,,,0.186,yes,7874 x 7874 px
+he_images/157779_2019AKK002.tif,he_images,6778620,H&E image,IZ_P3,IZ,P3,,,0.186,yes,7874 x 7874 px
+he_images/157781_2019AKK002.tif,he_images,6778620,H&E image,RZ/BZ_P3,BZ,P3,,,0.186,yes,7874 x 7874 px
+he_images/157782_2019AKK002.tif,he_images,6778620,H&E image,RZ_P3,RZ,P3,,,0.186,yes,7874 x 7874 px
+he_images/157785_2019AKK001.tif,he_images,6778620,H&E image,RZ/FZ_P5,FZ,P5,,,0.186,yes,7874 x 7874 px
+he_images/Visium_10_CK288.tif,he_images,6778620,H&E image,RZ/BZ_P12,BZ,P12,,,0.193,yes,9843 x 9390 px
+he_images/Visium_11_CK289.tif,he_images,6778620,H&E image,GT/IZ_P13,IZ,P13,,,0.165,yes,9843 x 9803 px
+he_images/Visium_12_CK290.tif,he_images,6778620,H&E image,FZ_P14,FZ,P14,,,0.187,yes,9843 x 9606 px
+he_images/Visium_13_CK291.tif,he_images,6778620,H&E image,FZ_P18,FZ,P18,,,0.177,yes,9843 x 9783 px
+he_images/Visium_14_CK292.tif,he_images,6778620,H&E image,FZ/GT_P19,FZ,P19,,,0.173,yes,9843 x 9094 px
+he_images/Visium_15_CK293.tif,he_images,6778620,H&E image,IZ_P16,IZ,P16,,,0.224,yes,9843 x 9567 px
+he_images/Visium_16_CK294.tif,he_images,6778620,H&E image,FZ_P20,FZ,P20,,,0.207,yes,9843 x 9449 px
+he_images/Visium_17_CK295.tif,he_images,6778620,H&E image,RZ_P6,RZ,P6,,,0.17,yes,9843 x 9252 px
+he_images/Visium_18_CK296.tif,he_images,6778620,H&E image,GT/IZ_P15,IZ,P15,,,0.199,yes,9843 x 9449 px
+he_images/Visium_19_CK297.tif,he_images,6778620,H&E image,GT/IZ_P9_rep2,IZ,P9,,,0.197,yes,9843 x 9626 px
+he_images/Visium_1_CK279.tif,he_images,6778620,H&E image,control_P17,CTRL,P17,,,0.162,yes,9843 x 9488 px
+he_images/Visium_20_CK298.tif,he_images,6778620,H&E image,IZ_P15,IZ,P15,,,0.17,yes,9843 x 9744 px
+he_images/Visium_2_CK280.tif,he_images,6778620,H&E image,RZ_P6,RZ,P6,,,0.178,yes,9843 x 9390 px
+he_images/Visium_3_CK281.tif,he_images,6778620,H&E image,control_P7,CTRL,P7,,,0.176,yes,9843 x 9252 px
+he_images/Visium_4_CK282.tif,he_images,6778620,H&E image,control_P8,CTRL,P8,,,0.159,yes,9843 x 9232 px
+he_images/Visium_5_CK283.tif,he_images,6778620,H&E image,RZ/GT_P2,RZ,P2,,,0.177,yes,9843 x 9469 px
+he_images/Visium_6_CK284.tif,he_images,6778620,H&E image,RZ_P9,RZ,P9,,,0.152,yes,9843 x 9469 px
+he_images/Visium_7_CK285.tif,he_images,6778620,H&E image,IZ_P10,IZ,P10,,,0.172,yes,9843 x 9528 px
+he_images/Visium_8_CK286.tif,he_images,6778620,H&E image,RZ_P11,RZ,P11,,,0.108,yes,9843 x 9823 px
+he_images/Visium_9_CK287.tif,he_images,6778620,H&E image,GT/IZ_P9,IZ,P9,,,0.217,yes,9843 x 9350 px
+he_images/metadata.xlsx,he_images,6778620,metadata,,,,28.0,6.0,0.0,yes,
+metadata/metadata-ATAC-seq.xlsx,metadata,6578617,metadata,,,,36.0,8.0,0.0,yes,
+metadata/metadata-RNA-seq.xlsx,metadata,6578617,metadata,,,,30.0,8.0,0.0,yes,
+processed1/Visium_FZ_GT_P19.h5ad,processed1,6578047,Visium (processed h5ad),FZ/GT_P19,FZ,P19,3100.0,14097.0,0.1,yes,
+processed1/Visium_FZ_GT_P4.h5ad,processed1,6578047,Visium (processed h5ad),FZ/GT_P4,FZ,P4,4253.0,14232.0,0.087,yes,
+processed1/Visium_FZ_P14.h5ad,processed1,6578047,Visium (processed h5ad),FZ_P14,FZ,P14,3175.0,14620.0,0.128,yes,
+processed1/Visium_FZ_P18.h5ad,processed1,6578047,Visium (processed h5ad),FZ_P18,FZ,P18,2551.0,13490.0,0.067,yes,
+processed1/Visium_FZ_P20.h5ad,processed1,6578047,Visium (processed h5ad),FZ_P20,FZ,P20,2410.0,13842.0,0.068,yes,
+processed1/Visium_GT_IZ_P13.h5ad,processed1,6578047,Visium (processed h5ad),GT/IZ_P13,IZ,P13,1890.0,14191.0,0.087,yes,
+processed1/Visium_GT_IZ_P15.h5ad,processed1,6578047,Visium (processed h5ad),GT/IZ_P15,IZ,P15,3572.0,17034.0,0.295,yes,
+processed1/Visium_GT_IZ_P9.h5ad,processed1,6578047,Visium (processed h5ad),GT/IZ_P9,IZ,P9,4361.0,15972.0,0.211,yes,
+processed1/Visium_GT_IZ_P9_rep2.h5ad,processed1,6578047,Visium (processed h5ad),GT/IZ_P9_rep2,IZ,P9,4113.0,17708.0,0.348,yes,
+processed1/Visium_IZ_BZ_P2.h5ad,processed1,6578047,Visium (processed h5ad),IZ/BZ_P2,IZ,P2,4203.0,16051.0,0.197,yes,
+processed1/Visium_IZ_P10.h5ad,processed1,6578047,Visium (processed h5ad),IZ_P10,IZ,P10,3646.0,15679.0,0.208,yes,
+processed1/Visium_IZ_P15.h5ad,processed1,6578047,Visium (processed h5ad),IZ_P15,IZ,P15,3083.0,16477.0,0.244,yes,
+processed1/Visium_IZ_P16.h5ad,processed1,6578047,Visium (processed h5ad),IZ_P16,IZ,P16,2713.0,14945.0,0.126,yes,
+processed1/Visium_IZ_P3.h5ad,processed1,6578047,Visium (processed h5ad),IZ_P3,IZ,P3,3771.0,15549.0,0.211,yes,
+processed1/Visium_RZ_BZ_P12.h5ad,processed1,6578047,Visium (processed h5ad),RZ/BZ_P12,BZ,P12,3392.0,14514.0,0.133,yes,
+processed1/Visium_RZ_BZ_P2.h5ad,processed1,6578047,Visium (processed h5ad),RZ/BZ_P2,BZ,P2,3373.0,15640.0,0.191,yes,
+processed1/Visium_RZ_BZ_P3.h5ad,processed1,6578047,Visium (processed h5ad),RZ/BZ_P3,BZ,P3,4659.0,16552.0,0.324,yes,
+processed1/Visium_RZ_FZ_P5.h5ad,processed1,6578047,Visium (processed h5ad),RZ/FZ_P5,FZ,P5,3082.0,15286.0,0.152,yes,
+processed1/Visium_RZ_GT_P2.h5ad,processed1,6578047,Visium (processed h5ad),RZ/GT_P2,RZ,P2,3538.0,14467.0,0.13,yes,
+processed1/Visium_RZ_P11.h5ad,processed1,6578047,Visium (processed h5ad),RZ_P11,RZ,P11,2016.0,13483.0,0.074,yes,
+processed1/Visium_RZ_P3.h5ad,processed1,6578047,Visium (processed h5ad),RZ_P3,RZ,P3,2994.0,15941.0,0.222,yes,
+processed1/Visium_RZ_P6.h5ad,processed1,6578047,Visium (processed h5ad),RZ_P6,RZ,P6,3484.0,15513.0,0.186,yes,
+processed1/Visium_RZ_P9.h5ad,processed1,6578047,Visium (processed h5ad),RZ_P9,RZ,P9,3626.0,14842.0,0.133,yes,
+processed1/Visium_control_P1.h5ad,processed1,6578047,Visium (processed h5ad),control_P1,CTRL,P1,4269.0,15730.0,0.177,yes,
+processed1/Visium_control_P17.h5ad,processed1,6578047,Visium (processed h5ad),control_P17,CTRL,P17,2043.0,13144.0,0.079,yes,
+processed1/Visium_control_P7.h5ad,processed1,6578047,Visium (processed h5ad),control_P7,CTRL,P7,2931.0,14492.0,0.116,yes,
+processed1/Visium_control_P8.h5ad,processed1,6578047,Visium (processed h5ad),control_P8,CTRL,P8,2456.0,13720.0,0.102,yes,
+processed2/Lymphoid_snRNA_snATAC.Rds,processed2,7098004,"snRNA-seq + snATAC-seq (per cell type, R)",all,,,,,0.649,not opened (outside Visium scope),
+processed2/Myeloid_snRNA_snATAC.Rds.part,processed2,,,,,,,,,incomplete download,
+processed2/Neuronal_snRNA_snATAC.Rds,processed2,7098004,"snRNA-seq + snATAC-seq (per cell type, R)",all,,,,,0.209,not opened (outside Visium scope),
+processed2/Pericyte_snRNA_snATAC.Rds,processed2,7098004,"snRNA-seq + snATAC-seq (per cell type, R)",all,,,,,1.664,not opened (outside Visium scope),
+processed2/sub-clusteirng-visualization.html,processed2,7098004,other,,,,,,0.006,not opened,
+processed2/vSMCs_snRNA_snATAC.Rds,processed2,7098004,"snRNA-seq + snATAC-seq (per cell type, R)",all,,,,,0.554,not opened (outside Visium scope),
+visium_raw/10X_Visium_10X001.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),control_P1,CTRL,P1,4269.0,,0.779,yes (Seurat object read),hca_sample_id 10X001
+visium_raw/10X_Visium_10X0017.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),IZ_P3,IZ,P3,3771.0,,0.744,yes (Seurat object read),hca_sample_id 10X0017
+visium_raw/10X_Visium_10X0018.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),IZ/BZ_P2,IZ,P2,4203.0,,0.798,yes (Seurat object read),hca_sample_id 10X0018
+visium_raw/10X_Visium_10X0020.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ_P3,RZ,P3,2994.0,,0.74,yes (Seurat object read),hca_sample_id 10X0020
+visium_raw/10X_Visium_10X0025.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ/BZ_P2,BZ,P2,3373.0,,0.725,yes (Seurat object read),hca_sample_id 10X0025
+visium_raw/10X_Visium_10X0026.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ/BZ_P3,BZ,P3,4659.0,,1.084,yes (Seurat object read),hca_sample_id 10X0026
+visium_raw/10X_Visium_10X0027.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ/FZ_P5,FZ,P5,3082.0,,0.606,yes (Seurat object read),hca_sample_id 10X0027
+visium_raw/10X_Visium_10X009.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),FZ/GT_P4,FZ,P4,4253.0,,0.613,yes (Seurat object read),hca_sample_id 10X009
+visium_raw/10X_Visium_ACH0010.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),GT/IZ_P13,IZ,P13,1890.0,,0.339,yes (Seurat object read),hca_sample_id ACH0010
+visium_raw/10X_Visium_ACH0011.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),GT/IZ_P15,IZ,P15,3572.0,,0.898,yes (Seurat object read),hca_sample_id ACH0011
+visium_raw/10X_Visium_ACH0012.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),GT/IZ_P9,IZ,P9,4361.0,,0.828,yes (Seurat object read),hca_sample_id ACH0012
+visium_raw/10X_Visium_ACH0013.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),GT/IZ_P9_rep2,IZ,P9,4113.0,,1.06,yes (Seurat object read),hca_sample_id ACH0013
+visium_raw/10X_Visium_ACH0014.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),IZ_P10,IZ,P10,3646.0,,0.731,yes (Seurat object read),hca_sample_id ACH0014
+visium_raw/10X_Visium_ACH0015.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),IZ_P15,IZ,P15,3083.0,,0.748,yes (Seurat object read),hca_sample_id ACH0015
+visium_raw/10X_Visium_ACH0016.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),IZ_P16,IZ,P16,2713.0,,0.493,yes (Seurat object read),hca_sample_id ACH0016
+visium_raw/10X_Visium_ACH0019.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ_P11,RZ,P11,2016.0,,0.32,yes (Seurat object read),hca_sample_id ACH0019
+visium_raw/10X_Visium_ACH002.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),control_P17,CTRL,P17,2043.0,,0.338,yes (Seurat object read),hca_sample_id ACH002
+visium_raw/10X_Visium_ACH0021.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ_P6,RZ,P6,2813.0,,0.491,yes (Seurat object read),hca_sample_id ACH0021
+visium_raw/10X_Visium_ACH0022.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ_P6,RZ,P6,3484.0,,0.707,yes (Seurat object read),hca_sample_id ACH0022
+visium_raw/10X_Visium_ACH0023.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ_P9,RZ,P9,3626.0,,0.594,yes (Seurat object read),hca_sample_id ACH0023
+visium_raw/10X_Visium_ACH0024.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ/BZ_P12,BZ,P12,3392.0,,0.595,yes (Seurat object read),hca_sample_id ACH0024
+visium_raw/10X_Visium_ACH0028.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),RZ/GT_P2,RZ,P2,3538.0,,0.58,yes (Seurat object read),hca_sample_id ACH0028
+visium_raw/10X_Visium_ACH003.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),control_P7,CTRL,P7,2931.0,,0.503,yes (Seurat object read),hca_sample_id ACH003
+visium_raw/10X_Visium_ACH004.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),control_P8,CTRL,P8,2456.0,,0.418,yes (Seurat object read),hca_sample_id ACH004
+visium_raw/10X_Visium_ACH005.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),FZ_P14,FZ,P14,3175.0,,0.539,yes (Seurat object read),hca_sample_id ACH005
+visium_raw/10X_Visium_ACH006.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),FZ_P18,FZ,P18,2551.0,,0.366,yes (Seurat object read),hca_sample_id ACH006
+visium_raw/10X_Visium_ACH007.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),FZ_P20,FZ,P20,2410.0,,0.367,yes (Seurat object read),hca_sample_id ACH007
+visium_raw/10X_Visium_ACH008.tar.gz,visium_raw,6580069,Visium (Space Ranger + Seurat),FZ/GT_P19,FZ,P19,3100.0,,0.474,yes (Seurat object read),hca_sample_id ACH008
+visium_raw/metadata-Visium.csv,visium_raw,6580069,metadata,,,,28.0,6.0,0.0,yes,

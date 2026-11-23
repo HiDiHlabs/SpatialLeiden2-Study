@@ -18,6 +18,13 @@ Built from `spagrn.yml`: Python 3.8, SpaGRN 1.1.4, pySCENIC 0.12.1, hotspotsc 1.
   - `motifs-v10nr_clust-nr.hgnc-m0.001-o0.0.tbl`,
   - `allTFs_hg38.txt` (1,892 TFs),
 
-  all under `/mnt/masld_vault/cistarget/`.
+  all in one local folder, given to `run_spagrn.py` via the `CISTARGET_DIR` environment variable (download from resources.aertslab.org/cistarget).
 
 - **Permissions:** the env is on the shared conda install. It was built with `umask 002` and made group-writable afterwards.
+
+**`spagrn` fix (23 Nov 2026).** The first run failed at the Geary's C step with `TypeError: w must be a pysal weights object`.
+
+- **Cause:** conda installed pysal 2.0.0, whose bundled `pysal.lib` weights class is not the `libpysal` 4.7 class that `esda` 2.5.1 checks for.
+- **Fix:** one line in `spagrn/autocor.py`, `from pysal.lib import weights` → `from libpysal import weights`. The original is kept as `autocor.py.orig`. The command is in `spagrn.yml`.
+- **Tested:** SpaGRN's own weights builder plus `gearys_c` now run.
+- **Not used:** upgrading pysal to 2.7 is the alternative, but conda could not solve it in reasonable time on the shared install.

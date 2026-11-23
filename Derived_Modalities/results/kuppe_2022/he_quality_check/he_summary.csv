@@ -1,0 +1,5 @@
+run,sample,file,width,height,spots,spots_in_bounds,pitch_px,um_per_px,equiv_mag,spot_tile_px,lap_var_median,lap_var_p10,colourfulness_median
+10X001,P1 control,157771_2019AKK006.tif,7874,7874,4269,4269,88.0,1.136,8.8x,88,325.8,69.2,36.5
+ACH0012,P9 GT/IZ,Visium_9_CK287.tif,9843,9350,4361,4361,117.0,0.855,11.7x,116,2334.3,965.2,45.1
+ACH0013,P9 GT/IZ rep2,Visium_19_CK297.tif,9843,9626,4113,4113,119.0,0.84,11.9x,120,503.5,292.1,35.1
+ACH0023,P9 RZ,Visium_6_CK284.tif,9843,9469,3626,3626,120.0,0.833,12.0x,120,444.2,250.5,109.5

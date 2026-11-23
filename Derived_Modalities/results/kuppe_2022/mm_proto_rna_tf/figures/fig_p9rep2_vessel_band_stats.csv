@@ -1,0 +1,5 @@
+feature,mean_in_band,mean_outside
+MYH11,1.395,0.119
+GJA5 (Cx40),0.498,0.04
+MYOCD,7.353,2.988
+JAG1 → NOTCH3,0.674,0.494

@@ -1,0 +1,21 @@
+slide,run,source,key,n_domains,coherence_edge_weighted,median,share_spots_gt0
+10X001,RNA + space,exp0_k_celltype_niche,r0.75_s0,8.0,0.779,,
+10X001,CCC only,exp0ccc_k_celltype_niche,r0_s0,8.0,0.463,,
+10X001,CCC + space 0.25,exp0ccc_k_celltype_niche,r0.25_s0,8.0,0.602,,
+10X001,CCC + space 0.75,exp0ccc_k_celltype_niche,r0.75_s0,8.0,0.894,,
+10X001,RNA + CCC + space 0.25,mm_configs_sp0.25,rna_ccc_s0,8.0,0.498,,
+10X001,RNA + CCC + space 0.75,mm_configs,rna_ccc_s0,8.0,0.895,,
+ACH0012,RNA + space,exp0_k_celltype_niche,r0.75_s0,8.0,0.906,,
+ACH0012,CCC only,exp0ccc_k_celltype_niche,r0_s0,8.0,0.697,,
+ACH0012,CCC + space 0.25,exp0ccc_k_celltype_niche,r0.25_s0,8.0,0.77,,
+ACH0012,CCC + space 0.75,exp0ccc_k_celltype_niche,r0.75_s0,8.0,0.899,,
+ACH0012,RNA + CCC + space 0.25,mm_configs_sp0.25,rna_ccc_s0,8.0,0.851,,
+ACH0012,RNA + CCC + space 0.75,mm_configs,rna_ccc_s0,8.0,0.889,,
+ACH0012,SPP1 → CD44 CCC score,local score,,,,0.4,0.629
+ACH0013,RNA + space,exp0_k_celltype_niche,r0.75_s0,9.0,0.73,,
+ACH0013,CCC only,exp0ccc_k_celltype_niche,r0_s0,9.0,0.556,,
+ACH0013,CCC + space 0.25,exp0ccc_k_celltype_niche,r0.25_s0,9.0,0.682,,
+ACH0013,CCC + space 0.75,exp0ccc_k_celltype_niche,r0.75_s0,9.0,0.853,,
+ACH0013,RNA + CCC + space 0.25,mm_configs_sp0.25,rna_ccc_s0,9.0,0.666,,
+ACH0013,RNA + CCC + space 0.75,mm_configs,rna_ccc_s0,9.0,0.837,,
+ACH0013,SPP1 → CD44 CCC score,local score,,,,0.547,0.842

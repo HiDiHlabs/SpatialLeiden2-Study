@@ -1,0 +1,32 @@
+donor,patient_region_id,region,zone,group,disease,age,sex,days_after_onset,modalities,visium_runs,n_spots,median_counts_per_spot,median_genes_per_spot
+P1,control_P1,control,CTRL,Control donor,control,44,m,,snRNA-seq+snATAC-seq+Visium,10X001,4269.0,3264.0,1649.0
+P17,control_P17,control,CTRL,Control donor,control,61,m,,snRNA-seq+snATAC-seq+Visium,ACH002,2043.0,2912.0,1514.0
+P7,control_P7,control,CTRL,Control donor,control,55,f,,snRNA-seq+snATAC-seq+Visium,ACH003,2931.0,2821.0,1531.0
+P8,control_P8,control,CTRL,Control donor,control,44,m,,snRNA-seq+snATAC-seq+Visium,ACH004,2456.0,3168.5,1658.0
+P14,FZ_P14,FZ,FZ,Transplant recipient,ICM,59,m,62.0,snRNA-seq+snATAC-seq+Visium,ACH005,3175.0,2424.0,1359.0
+P18,FZ_P18,FZ,FZ,Transplant recipient,ICM,64,f,153.0,snRNA-seq+snATAC-seq+Visium,ACH006,2551.0,1365.0,870.0
+P20,FZ_P20,FZ,FZ,Transplant recipient,ICM,63,m,166.0,snRNA-seq+snATAC-seq+Visium,ACH007,2410.0,1349.0,924.5
+P19,FZ/GT_P19,FZ/GT,FZ,Transplant recipient,ICM,58,m,40.0,snRNA-seq+snATAC-seq+Visium,ACH008,3100.0,1882.0,1172.0
+P4,FZ/GT_P4,FZ/GT,FZ,Transplant recipient,ICM,74,m,88.0,snRNA-seq+snATAC-seq+Visium,10X009,4253.0,954.0,643.0
+P13,GT/IZ_P13,GT/IZ,IZ,Transplant recipient,ICM,51,m,45.0,snRNA-seq+snATAC-seq+Visium,ACH0010,1890.0,3407.0,1754.5
+P15,GT/IZ_P15,GT/IZ,IZ,Acute MI,AMI,43,f,11.0,snRNA-seq+snATAC-seq+Visium,ACH0011,3572.0,8747.0,3493.0
+P9,GT/IZ_P9,GT/IZ,IZ,Acute MI,AMI,52,f,2.0,snRNA-seq+snATAC-seq+Visium,ACH0012,4361.0,3540.0,1985.0
+P9,GT/IZ_P9_rep2,GT/IZ,IZ,Acute MI,AMI,52,f,2.0,snRNA-seq+snATAC-seq+Visium,ACH0013,4113.0,8582.0,3458.0
+P10,IZ_P10,IZ,IZ,Acute MI,AMI,38,m,6.0,snRNA-seq+snATAC-seq+Visium,ACH0014,3646.0,4415.5,2270.0
+P15,IZ_P15,IZ,IZ,Acute MI,AMI,43,f,11.0,snRNA-seq+snATAC-seq+Visium,ACH0015,3083.0,7453.0,3193.0
+P16,IZ_P16,IZ,IZ,Acute MI,AMI,66,m,4.0,snRNA-seq+snATAC-seq+Visium,ACH0016,2713.0,2415.0,1466.0
+P3,IZ_P3,IZ,IZ,Acute MI,AMI,57,m,2.0,snRNA-seq+snATAC-seq+Visium,10X0017,3771.0,3263.0,1933.0
+P2,IZ/BZ_P2,IZ/BZ,IZ,Acute MI,AMI,44,m,5.0,snRNA-seq+snATAC-seq+Visium,10X0018,4203.0,1555.0,1041.0
+P11,RZ_P11,RZ,RZ,Transplant recipient,ICM,60,f,31.0,snRNA-seq+snATAC-seq+Visium,ACH0019,2016.0,2298.5,1398.5
+P3,RZ_P3,RZ,RZ,Acute MI,AMI,57,m,2.0,snRNA-seq+snATAC-seq+Visium,10X0020,2994.0,7855.5,3033.0
+P6,RZ_P6,RZ,RZ,Acute MI,AMI,47,m,3.0,snRNA-seq+snATAC-seq+Visium,ACH0021;ACH0022,6297.0,3652.75,1897.0
+P6,RZ_P6,RZ,RZ,Acute MI,AMI,47,m,3.0,snRNA-seq+snATAC-seq+Visium,ACH0021;ACH0022,6297.0,3652.75,1897.0
+P9,RZ_P9,RZ,RZ,Acute MI,AMI,52,f,2.0,snRNA-seq+snATAC-seq+Visium,ACH0023,3626.0,2337.0,1437.0
+P12,RZ/BZ_P12,RZ/BZ,BZ,Transplant recipient,ICM,40,m,31.0,snRNA-seq+snATAC-seq+Visium,ACH0024,3392.0,2829.0,1574.0
+P2,RZ/BZ_P2,RZ/BZ,BZ,Acute MI,AMI,44,m,5.0,snRNA-seq+snATAC-seq+Visium,10X0025,3373.0,4904.0,2284.0
+P3,RZ/BZ_P3,RZ/BZ,BZ,Acute MI,AMI,57,m,2.0,snRNA-seq+snATAC-seq+Visium,10X0026,4659.0,7400.0,2846.0
+P5,RZ/FZ_P5,RZ/FZ,FZ,Transplant recipient,"CAD, HF",63,m,101.0,snRNA-seq+snATAC-seq+Visium,10X0027,3082.0,4047.0,1969.0
+P2,RZ/GT_P2,RZ/GT,RZ,Acute MI,AMI,44,m,5.0,snRNA-seq+snATAC-seq+Visium,ACH0028,3538.0,2398.0,1447.0
+P21,IZ_P21_ext1,IZ,IZ,Validation (snRNA-seq only),AMI,61,m,12.0,snRNA-seq,,,,
+P22,IZ_P22_ext2,IZ,IZ,Validation (snRNA-seq only),AMI,46,m,7.0,snRNA-seq,,,,
+P23,IZ_P23_ext3,IZ,IZ,Validation (snRNA-seq only),AMI,29,m,10.0,snRNA-seq,,,,

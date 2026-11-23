@@ -44,8 +44,20 @@ mpl.rcParams.update(
     }
 )
 
-df = pd.read_csv(RES / "exp0_sweep.csv")
-KS = df.groupby("slide").target_k.first().to_dict()
+df_all = pd.read_csv(RES / "exp0_sweep.csv")
+# Runs whose resolution search did not reach K are kept in the table but left out of every
+# mean: a run with fewer, larger clusters is mechanically more coherent (the confound the
+# fixed-K design removes). Their number per slide and ratio is written next to the figures.
+missed = df_all[df_all.n_clusters != df_all.target_k]
+(
+    df_all.assign(missed_k=df_all.n_clusters != df_all.target_k)
+    .groupby(["slide", "layer_ratio"])
+    .missed_k.sum()
+    .unstack(0)
+    .to_csv(FIG / "runs_missing_k_per_ratio.csv")
+)
+df = df_all[df_all.n_clusters == df_all.target_k].copy()
+KS = df_all.groupby("slide").target_k.first().to_dict()
 K = int(df.target_k.iloc[0])
 SLIDE_COL = {
     "ACH0013": "#D55E00",
@@ -104,7 +116,15 @@ ktxt = (
 fig.text(
     0.5,
     -0.02,
-    f"{ktxt}, held at every layer_ratio. Line: mean over 5 seeds; band: range over seeds.",
+    f"{ktxt}, held at every layer_ratio. Line: mean over seeds that reached K; band: range. "
+    f"Runs that missed K (excluded): {len(missed)} of {len(df_all)}"
+    + (
+        " (" + ", ".join(f"{LABEL[r.slide]} ratio {r.layer_ratio:g}" for r in missed.itertuples()) + ")"
+        if 0 < len(missed) <= 8
+        else ""
+    )
+    + ". Seed stability uses only those seeds; it reflects Leiden's randomness alone "
+    "(graphs are fixed), so it is a lower bound on run-to-run variability.",
     ha="center",
     fontsize=5.5,
 )

@@ -1,0 +1,25 @@
+slide,run,source,key,n_domains,coherence_edge_weighted
+10X001,RNA + space,exp0_k_celltype_niche,r0.75_s0,8,0.779
+10X001,TF + space,exp0tf_k_celltype_niche,r0.75_s0,8,0.717
+10X001,CCC + space,exp0ccc_k_celltype_niche,r0.75_s0,8,0.894
+10X001,Metabolic + space,exp0met_k_celltype_niche,r0.75_s0,8,0.497
+10X001,RNA + TF + space,mm_configs,rna_tf_s0,8,0.693
+10X001,RNA + CCC + space,mm_configs,rna_ccc_s0,8,0.895
+10X001,RNA + metab. + space,mm_configs,rna_met_s0,8,0.718
+10X001,RNA + all + space,mm_configs,rna_all_s0,8,0.796
+ACH0012,RNA + space,exp0_k_celltype_niche,r0.75_s0,8,0.906
+ACH0012,TF + space,exp0tf_k_celltype_niche,r0.75_s0,8,0.803
+ACH0012,CCC + space,exp0ccc_k_celltype_niche,r0.75_s0,8,0.899
+ACH0012,Metabolic + space,exp0met_k_celltype_niche,r0.75_s0,8,0.791
+ACH0012,RNA + TF + space,mm_configs,rna_tf_s0,8,0.816
+ACH0012,RNA + CCC + space,mm_configs,rna_ccc_s0,8,0.889
+ACH0012,RNA + metab. + space,mm_configs,rna_met_s0,8,0.815
+ACH0012,RNA + all + space,mm_configs,rna_all_s0,8,0.891
+ACH0013,RNA + space,exp0_k_celltype_niche,r0.75_s0,9,0.73
+ACH0013,TF + space,exp0tf_k_celltype_niche,r0.75_s0,9,0.733
+ACH0013,CCC + space,exp0ccc_k_celltype_niche,r0.75_s0,9,0.853
+ACH0013,Metabolic + space,exp0met_k_celltype_niche,r0.75_s0,9,0.59
+ACH0013,RNA + TF + space,mm_configs,rna_tf_s0,9,0.673
+ACH0013,RNA + CCC + space,mm_configs,rna_ccc_s0,9,0.837
+ACH0013,RNA + metab. + space,mm_configs,rna_met_s0,9,0.674
+ACH0013,RNA + all + space,mm_configs,rna_all_s0,9,0.668

@@ -93,3 +93,26 @@ ARI to the published niches at `layer_ratio` 0.5 (cell-type / molecular):
 - Coherence, distance from the baseline and seed stability show the same pattern as at K = 15 and K = 9. The conclusions above do not depend on K.
 
 **Reproducibility check:** where two runs share the same K on the same slide, the numbers are identical. P9 rep2 has K = 9 in both the "K = 9" and the "cell-type niches" runs, and P1 has K = 8 in both matched runs.
+
+## Code review fixes (23 November 2026) and their effect
+
+| Issue raised in review | Fix |
+|---|---|
+| Two coherence definitions (per-spot in notebook section 6, per-pair in the sweep) | Per-pair (edge-weighted, join-count form) everywhere |
+| Runs that missed K were pooled into the means | Excluded from every mean and from seed stability. Kept in the CSV files and listed in `figures/runs_missing_k_per_ratio.csv` and in the figure captions |
+| Shared random generator for the label shuffles (results depended on run order) | Fresh generator with a fixed seed per call |
+| Private API (`spatialleiden._resolution_search._search_resolution`) | Replaced by a local copy of the same step-halving routine, with the reason documented. No public function searches the expression resolution with `spatialleiden(layer_ratio=0)` |
+| Notebook section 5 took the expression resolution from the last loop iteration | Searched once, explicitly, with `search_resolution_latent` |
+| No assert that the h5ad's `X` and `.raw` share gene order | Assert added |
+| Seed stability read as overall reproducibility | Stated as a lower bound: graphs are fixed, so only Leiden's randomness varies |
+
+**Effect: none of the conclusions change.** All 480 runs give identical partitions (ARI to ratio 0 is unchanged in every run).
+
+- **Coherence gaps** move by at most 0.003 (the new shuffle seeds).
+- **Means** move by at most 0.003 (coherence gap) and 0.009 (ARI to ratio 0).
+- **Seed stability** moves by at most 0.027 (K = 15, where most misses were).
+- **Notebook section 6:** per-spot and per-pair coherence differ by at most 0.002 on this slide.
+
+**Runs that missed K:** 7 of 120 at K = 15, scattered over ratios 0–2. At K = 9 there is 1 (ratio 2.5, ACH0012); with K matched to the cell-type niches, 2 (ratio 2.5, ACH0012); with K matched to the molecular niches, none. The misses do not cluster at high ratios in the main settings, so the top of the coherence curve is not an artefact of them.
+
+**Kept as is, documented for the multi-sample step:** `normalize_total` without `target_sum` (the preprint's default), and `filter_genes` per slide.

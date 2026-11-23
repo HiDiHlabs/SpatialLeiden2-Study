@@ -1,0 +1,22 @@
+slide,run,key,n_domains,coherence_edge_weighted,median,share_spots_detected
+10X001,SPP1 expression,log1p(CP10k),,,0.0,0.076
+10X001,NPPB expression,log1p(CP10k),,,2.099,0.837
+10X001,RNA only,r0_s0,8.0,0.384,,
+10X001,RNA + space,r0.75_s0,8.0,0.779,,
+10X001,TF activity only,r0_s0,8.0,0.176,,
+10X001,TF activity + space,r0.75_s0,8.0,0.717,,
+10X001,RNA + TF + space,sp0.75_tf0.5_s0,8.0,0.665,,
+ACH0012,SPP1 expression,log1p(CP10k),,,0.0,0.429
+ACH0012,NPPB expression,log1p(CP10k),,,3.572,0.941
+ACH0012,RNA only,r0_s0,8.0,0.747,,
+ACH0012,RNA + space,r0.75_s0,8.0,0.906,,
+ACH0012,TF activity only,r0_s0,8.0,0.463,,
+ACH0012,TF activity + space,r0.75_s0,8.0,0.803,,
+ACH0012,RNA + TF + space,sp0.75_tf0.5_s0,8.0,0.88,,
+ACH0013,SPP1 expression,log1p(CP10k),,,0.0,0.456
+ACH0013,NPPB expression,log1p(CP10k),,,1.935,0.882
+ACH0013,RNA only,r0_s0,9.0,0.585,,
+ACH0013,RNA + space,r0.75_s0,9.0,0.73,,
+ACH0013,TF activity only,r0_s0,9.0,0.356,,
+ACH0013,TF activity + space,r0.75_s0,9.0,0.733,,
+ACH0013,RNA + TF + space,sp0.75_tf0.5_s0,9.0,0.676,,

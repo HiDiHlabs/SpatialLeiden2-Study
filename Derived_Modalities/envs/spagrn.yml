@@ -2,7 +2,7 @@
 # SpaGRN requires Python >=3.8,<3.9 and pins an old stack (setup.py of v1.1.4).
 # dask/distributed 2023.5.0 are the last releases supporting Python 3.8;
 # numba 0.56 is the last line compatible with numpy 1.23.
-# cisTarget databases (hg38 v10) and allTFs_hg38.txt are on the vault: /mnt/masld_vault/cistarget
+# cisTarget databases (hg38 v10) and allTFs_hg38.txt are downloaded from resources.aertslab.org/cistarget; point CISTARGET_DIR at their folder
 name: spagrn
 channels:
   - conda-forge
@@ -29,3 +29,8 @@ dependencies:
       - pyscenic==0.12.1
       - hotspotsc==1.1.1
       - spagrn==1.1.4
+# REQUIRED POST-INSTALL PATCH (23 Nov 2026): conda resolves pysal 2.0.0, whose vendored `pysal.lib`
+# weights class is rejected by esda 2.5 ("w must be a pysal weights object"). Patch one line:
+#   sed -i 's/^\(\s*\)from pysal.lib import weights$/\1from libpysal import weights/' \
+#     $CONDA_PREFIX/lib/python3.8/site-packages/spagrn/autocor.py
+# (an upgrade to pysal 2.7 was not solvable in reasonable time on the shared install).

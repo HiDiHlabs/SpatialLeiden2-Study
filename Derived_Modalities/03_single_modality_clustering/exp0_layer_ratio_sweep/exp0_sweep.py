@@ -64,7 +64,6 @@ from sklearn.metrics import (  # noqa: E402
     adjusted_rand_score,
     normalized_mutual_info_score,
 )
-from spatialleiden._resolution_search import _search_resolution  # noqa: E402
 
 SLIDES = {  # run id -> (h5ad name, label)
     "ACH0013": ("Visium_GT_IZ_P9_rep2.h5ad", "P9 IZ rep2 (ACH0013)"),
@@ -76,6 +75,7 @@ RATIOS = [0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 2.5]
 SEEDS = [0, 1, 2, 3, 4]
 N_SEARCH = 30  # search iterations (package default 15)
 N_SHUFFLE = 20
+SHUFFLE_SEED = 0  # fixed seed for the label shuffles, fresh generator per call
 GRAPH_SEED = 0  # PCA / neighbour graph, fixed for the whole sweep
 DIRECTED = (False, False)  # as in the preprint code: symmetric kNN graph, regular grid
 
@@ -113,25 +113,137 @@ def preprocess(a: ad.AnnData) -> None:
     sq.gr.spatial_neighbors(a, coord_type="grid", n_neighs=6)
 
 
+def load_tf_layer(data: Path, run: str) -> ad.AnnData:
+    """TF activity (decoupler ULM + CollecTRI, 02_modalities/collectri) as the latent layer.
+
+    Spots are in the same barcode order as the RNA h5ad; obs carries the authors' spot
+    table (grid position, niches) and obsm["spatial"] the true coordinates.
+    """
+    a = ad.read_h5ad(data / "modalities" / f"collectri_ulm_{run}.h5ad")
+    h5_order = ad.read_h5ad(data / "processed1" / SLIDES[run][0], backed="r").obs_names
+    assert list(a.obs_names) == list(h5_order), f"{run}: TF layer spot order differs"
+    for c in ["array_row", "array_col", "celltype_niche", "molecular_niche"]:
+        assert c in a.obs, f"{run}: {c} missing in TF layer"
+    return a
+
+
+def preprocess_tf(a: ad.AnnData) -> None:
+    """Graphs for the TF layer, built like the RNA ones: each TF z-scored within the slide,
+    PCA with 30 components, 15 nearest neighbours; same spatial grid graph."""
+    sc.pp.scale(a)  # z-score per TF (centred), as TF scores are dense and mostly positive
+    sc.pp.pca(a, n_comps=30, random_state=GRAPH_SEED)
+    sc.pp.neighbors(a, n_neighbors=15, n_pcs=30, random_state=GRAPH_SEED)
+    sq.gr.spatial_neighbors(a, coord_type="grid", n_neighs=6)
+
+
+def load_ccc_layer(data: Path, run: str) -> ad.AnnData:
+    """Cell-cell communication scores (team-provided, LIANA+-style local ligand-receptor
+    scores, data/kuppe_2022/modalities/ccc_<run>.csv) as the latent layer, reordered to the
+    RNA h5ad barcode order; obs from the authors' spot table, obsm["spatial"] = coordinates.
+
+    Note: these scores are computed over a spatial kernel, so they are already spatially
+    smooth; adding the spatial graph on top counts space twice."""
+    x = pd.read_csv(data / "modalities" / f"ccc_{run}.csv", index_col=0)
+    h5_order = ad.read_h5ad(data / "processed1" / SLIDES[run][0], backed="r").obs_names
+    assert set(x.index) == set(h5_order), f"{run}: CCC spots differ from the h5ad"
+    x = x.loc[h5_order]
+    x = x.loc[:, x.std() > 0]  # pairs constant on this slide carry no information
+    spots = pd.read_csv(data / "visium_tables" / f"{run}_spots.csv").set_index("barcode").loc[h5_order]
+    a = ad.AnnData(X=x.to_numpy(np.float32), obs=pd.DataFrame(index=h5_order),
+                   var=pd.DataFrame(index=x.columns))
+    for c in ["array_row", "array_col", "celltype_niche", "molecular_niche"]:
+        a.obs[c] = spots[c].to_numpy()
+    a.obsm["spatial"] = spots[["pxl_col_fullres", "pxl_row_fullres"]].to_numpy(float)
+    return a
+
+
+def load_sccellfie_layer(data: Path, run: str) -> ad.AnnData:
+    """Metabolic task activity (scCellFie, 02_modalities/sccellfie) as the latent layer;
+    spots already in the RNA h5ad barcode order. Graph built like the CCC/TF layers."""
+    a = ad.read_h5ad(data / "modalities" / f"sccellfie_tasks_{run}.h5ad")
+    h5_order = ad.read_h5ad(data / "processed1" / SLIDES[run][0], backed="r").obs_names
+    assert list(a.obs_names) == list(h5_order), f"{run}: scCellFie spot order differs"
+    a = a[:, np.asarray(a.X.std(0)).ravel() > 0].copy()
+    return a
+
+
+def preprocess_ccc(a: ad.AnnData) -> None:
+    """Graphs for the CCC layer, built like the TF ones: each pair z-scored within the slide,
+    PCA (30 components, or fewer if the slide has few pairs), 15 nearest neighbours;
+    same spatial grid graph."""
+    n_pcs = min(30, a.n_vars - 1)
+    sc.pp.scale(a)
+    sc.pp.pca(a, n_comps=n_pcs, random_state=GRAPH_SEED)
+    sc.pp.neighbors(a, n_neighbors=15, n_pcs=n_pcs, random_state=GRAPH_SEED)
+    sq.gr.spatial_neighbors(a, coord_type="grid", n_neighs=6)
+
+
 def edges(a: ad.AnnData):
     i, j = a.obsp["spatial_connectivities"].nonzero()
     return i, j
 
 
 def coherence(labels, i, j) -> float:
+    """Edge-weighted coherence: share of neighbouring spot pairs with the same label."""
     return float((labels[i] == labels[j]).mean())
+
+
+def shuffled_coherence(labels, i, j) -> float:
+    """Mean coherence after shuffling labels within the slide. A fresh generator with a
+    fixed seed per call, so the null does not depend on the order in which runs happen."""
+    rng = np.random.default_rng(SHUFFLE_SEED)
+    return float(
+        np.mean([coherence(rng.permutation(labels), i, j) for _ in range(N_SHUFFLE)])
+    )
+
+
+def search_resolution_steps(n_clusters_at, target, start=1.0, step=0.1, n_iter=None):
+    """Step-halving search for a resolution that gives `target` clusters.
+
+    Same algorithm as spatialleiden 0.4's private `_resolution_search._search_resolution`,
+    copied here so this code does not depend on a private API. It is needed because no
+    public function searches the expression resolution with `spatialleiden(layer_ratio=0)`
+    itself: `search_resolution_latent` uses plain Leiden, a different optimiser path
+    (see README, "Sanity check"). Returns (resolution, reached_target).
+    """
+    n_iter = N_SEARCH if n_iter is None else n_iter
+    res = start
+    n = n_clusters_at(res)
+    i = 1
+    while n != target:
+        if i >= n_iter:
+            return res, False
+        sign = 1 if n < target else -1
+        res += step * sign
+        n = n_clusters_at(res)
+        if (1 if n < target else -1) != sign:
+            step /= 2
+        i += 1
+    return res, True
 
 
 def run_seed(job):
     """One (slide, seed): every layer_ratio. Runs in its own process."""
-    data, run, k, seed = job
+    data, run, k, seed, latent = job
     t0 = time.time()
-    a = load_slide(data, run)
-    preprocess(a)  # deterministic: identical graphs in every job of this slide
+    if latent == "rna":
+        a = load_slide(data, run)
+        preprocess(a)  # deterministic: identical graphs in every job of this slide
+    elif latent == "collectri":
+        a = load_tf_layer(data, run)
+        preprocess_tf(a)
+    elif latent == "ccc":
+        a = load_ccc_layer(data, run)
+        preprocess_ccc(a)
+    elif latent == "sccellfie":
+        a = load_sccellfie_layer(data, run)
+        preprocess_ccc(a)  # same recipe: z-score per feature, PCA, 15-NN, grid
+    else:
+        raise ValueError(f"unknown latent layer {latent}")
     ei, ej = edges(a)
     ct = a.obs.celltype_niche.to_numpy()
     mol = a.obs.molecular_niche.to_numpy()
-    rng = np.random.default_rng(seed)  # label shuffles
+
     deg = np.bincount(np.bincount(ei, minlength=a.n_obs)).tolist()
     msgs = [
         f"{run} seed {seed}: {a.n_obs} spots, {a.n_vars} genes, spatial degree {deg}, "
@@ -152,10 +264,8 @@ def run_seed(job):
         return a.obs["tmp"].nunique()
 
     # ratio 0: search the latent resolution for K with spatialleiden(layer_ratio=0) itself
-    with warnings.catch_warnings(record=True) as w:
-        warnings.simplefilter("always")
-        r_lat = _search_resolution(n_ratio0, k, start=1.0, step=0.1, n_iter=N_SEARCH)
-    failed0 = any("Correct resolution not found" in str(x.message) for x in w)
+    r_lat, reached0 = search_resolution_steps(n_ratio0, k)
+    failed0 = not reached0
     # sanity check: plain Leiden and latent-only multiplex at the same resolution and seed
     sl.leiden(
         a, resolution=r_lat, directed=False, random_state=seed, key_added="leiden_plain"
@@ -226,9 +336,7 @@ def run_seed(job):
         labels[key] = lab
         sizes = np.sort(np.bincount(pd.factorize(lab)[0]))[::-1]
         obs = coherence(lab, ei, ej)
-        shuf = float(
-            np.mean([coherence(rng.permutation(lab), ei, ej) for _ in range(N_SHUFFLE)])
-        )
+        shuf = shuffled_coherence(lab, ei, ej)
         base = labels[f"r0_s{seed}"]
         rows.append(
             {
@@ -239,6 +347,7 @@ def run_seed(job):
                 "n_clusters": len(sizes),
                 "target_k": k,
                 "search_failed": failed,
+                "reached_k": len(sizes) == k,
                 "res_latent": r_lat,
                 "res_spatial": r_sp,
                 "coherence": obs,
@@ -283,17 +392,20 @@ def assemble_slide(run, results, out_dir):
     df = pd.DataFrame(rows)
     stab = []
     for ratio in RATIOS:
+        # only seeds that reached K: a run with a different cluster count would confound stability
+        ok = set(df[(df.layer_ratio == ratio) & df.reached_k].seed)
         aris = [
             adjusted_rand_score(labels[f"r{ratio}_s{s1}"], labels[f"r{ratio}_s{s2}"])
-            for s1, s2 in combinations(SEEDS, 2)
+            for s1, s2 in combinations([s for s in SEEDS if s in ok], 2)
         ]
         stab.append(
             {
                 "slide": run,
                 "layer_ratio": ratio,
-                "seed_ARI_mean": np.mean(aris),
-                "seed_ARI_min": np.min(aris),
-                "seed_ARI_max": np.max(aris),
+                "n_seeds_reached_k": len(ok),
+                "seed_ARI_mean": np.mean(aris) if aris else np.nan,
+                "seed_ARI_min": np.min(aris) if aris else np.nan,
+                "seed_ARI_max": np.max(aris) if aris else np.nan,
             }
         )
     df = df.merge(pd.DataFrame(stab), on=["slide", "layer_ratio"])
@@ -319,6 +431,12 @@ def main():
     )
     p.add_argument("--k", type=int, default=None)
     p.add_argument("--jobs", type=int, default=15)
+    p.add_argument(
+        "--latent",
+        choices=["rna", "collectri", "ccc", "sccellfie"],
+        default="rna",
+        help="layer for the non-spatial graph: RNA expression (default), TF activity, CCC scores or scCellFie metabolic tasks",
+    )
     p.add_argument(
         "--k-from",
         choices=["celltype_niche", "molecular_niche"],
@@ -376,7 +494,9 @@ def main():
 
     # one process per (slide, seed); Leiden is single-threaded, so this is ~15x faster
     jobs = [
-        (args.data, run, k_per_slide[run], seed) for run in SLIDES for seed in SEEDS
+        (args.data, run, k_per_slide[run], seed, args.latent)
+        for run in SLIDES
+        for seed in SEEDS
     ]
     t0 = time.time()
     per_slide = {run: [] for run in SLIDES}
