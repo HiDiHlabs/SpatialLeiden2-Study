@@ -1,0 +1,225 @@
+% Kuppe et al. 2022 Visium sections: introductory exploration (descriptive only).
+% Build: tectonic kuppe_visium_exploration.tex   (figures from ../../../results/kuppe_2022/visium_exploration)
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{float}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{xcolor}
+\captionsetup{font=footnotesize,labelfont=bf}
+\graphicspath{{../../../results/kuppe_2022/visium_exploration/figures/}}
+\newcommand{\answer}[2]{\par\medskip\noindent\textbf{#1}\ #2\par}
+
+\title{Kuppe et al.\ 2022: the Visium sections\\[4pt]\large Introductory data exploration, project~C (DMGE)}
+\author{}
+\date{23 November 2026}
+
+\begin{document}
+\maketitle
+
+\paragraph{Scope.} This document shows what is in the spatial transcriptomics (Visium) part of the human myocardial infarction dataset of Kuppe et al.\ (Nature 608, 766--777, 2022), so that we can choose sections and modalities for the project. It is \textbf{descriptive only}. Everything shown ships with the data: the authors' annotations, cell2location estimates, niche labels and images. Nothing was recomputed from expression: no pathway or TF activity, no clustering, no deconvolution, no integration and no differential expression. The single-nucleus data are covered only through the authors' sample tables; their own figures are left for a later pass.
+
+\paragraph{Questions this document answers.}
+\begin{enumerate}
+\item Which samples have matched snRNA-seq, snATAC-seq and Visium? (Fig.~\ref{fig:avail})
+\item Which border-zone slides are usable, and how deep are they? (Figs.~\ref{fig:qc}, \ref{fig:depth})
+\item Does spot depth or cellularity vary systematically by zone? (Fig.~\ref{fig:depth})
+\item How spatially coherent are the published cell-type and molecular niches? (Figs.~\ref{fig:niches}, \ref{fig:coherence})
+\item Is H\&E available for every slide? (Fig.~\ref{fig:he})
+\item How strong is the donor effect in the existing embeddings? (Not answered here; see Section~\ref{sec:left-out}.)
+\end{enumerate}
+
+\paragraph{Short answers.}
+\begin{enumerate}
+\item According to the authors' sample tables, all 27 tissue samples have all three. The snATAC data from ischaemic samples is thin, though: a median of 434 nuclei.
+\item Three sections are labelled border zone, all mixed with remote zone (RZ/BZ\_P2, P3, P12). All three are usable, with median depths of 2,829--7,400 UMIs per spot. IZ/BZ\_P2 is counted as ischaemic and is the shallowest section in the cohort by estimated cells.
+\item Yes. Fibrotic sections are the shallowest (median 1,797 UMIs and 1.3 estimated cells per spot, against 3,000--5,000 UMIs and about 2.2 cells elsewhere). The cell estimate rises with depth, so it is not an independent cellularity measure.
+\item Both niche sets are more coherent than chance but far from contiguous. They are most coherent in ischaemic and fibrotic tissue and close to chance in myogenic tissue.
+\item Yes. All 28 runs have a full-resolution H\&E image plus low- and high-resolution images and scale factors.
+\item Not answered: it needs the snRNA-seq embeddings, which are outside the Visium scope of this pass.
+\end{enumerate}
+
+\clearpage
+\section*{Where the data lives}
+
+The study is split over six Zenodo records and one CELLxGENE collection. The paper's data availability statement does not say which record holds what; the table below is worked out from the file listings.
+
+\medskip
+\noindent{\small
+\begin{tabularx}{\linewidth}{@{}l l X r@{}}
+\toprule
+Record & Name & Contents & Size \\
+\midrule
+6578047 & Processed Data 1 & 27 Visium sections as h5ad (CELLxGENE schema 2.0; no niches, coordinates rescaled to 0--1); snRNA-seq h5ad; snATAC-seq h5ad & 25.4 GB \\
+7098004 & Processed Data 2 & One snRNA+snATAC R object (.Rds) per major cell type, plus a sub-clustering HTML report & 34.1 GB \\
+6578553 & Raw Data 1 & 31 snATAC fragment files & 49.0 GB \\
+6578617 & Raw Data 2 & 32 snRNA Cell Ranger outputs; 8 snATAC fragment files; RNA and ATAC sample sheets (Supplementary Tables 2--3) & 35.5 GB \\
+6580069 & Raw Data 3 & 28 Visium Space Ranger outputs, \textbf{each with the authors' Seurat object} (niches, cell2location, coordinates); Visium sample sheet & 17.5 GB \\
+6778620 & Raw Data 4 & 28 full-resolution H\&E images (TIFF) and an image sample sheet & 5.1 GB \\
+CELLxGENE & 8191c283\ldots & 28 Visium sections, all snRNA, all snATAC, and the ischaemia validation snRNA set (schema 7.1.0) & -- \\
+\bottomrule
+\end{tabularx}}
+
+\medskip
+The Visium sections are usable only by combining records: expression comes from 6578047 or 6580069, niches and cell2location from the Seurat objects in 6580069, and images from 6580069 (low resolution) or 6778620 (full resolution). The authors' code is at \url{https://github.com/saezlab/visium_heart}.
+
+\subsection*{What was downloaded}
+Everything needed for the Visium sections is complete. Status at the time of writing:
+
+\medskip
+\begin{center}\small\input{table_download.tex}\end{center}
+
+\noindent Not yet complete: the snRNA-seq and snATAC-seq h5ad files from 6578047, and three of the per-cell-type objects from 7098004 (all still downloading; none is needed here). Not downloaded on purpose: the raw snATAC fragments and snRNA Cell Ranger outputs (6578553, most of 6578617), and the CELLxGENE copies. Every file is listed in \texttt{data\_inventory.csv}.
+
+% ------------------------------------------------------------------------
+\clearpage
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig1_availability.pdf}
+\caption{\textbf{Modality availability per tissue sample.} Rows: the 27 tissue samples, ordered by zone (label colour), then by patient. Columns: whether each data type exists, with the number of nuclei (snRNA-seq, snATAC-seq; from the authors' Supplementary Tables 2--3) or spots (Visium) printed inside. ``Visium h5ad'' is the Zenodo processed file; ``Space Ranger + Seurat'' is the archive holding the authors' annotated object. RZ\_P6 was run twice on Visium (ACH0021, ACH0022); the h5ad holds only ACH0022.}
+\label{fig:avail}
+\end{figure}
+
+\answer{Question 1.}{All 27 tissue samples have snRNA-seq, snATAC-seq and Visium, so in principle every Visium section has a matched triple. Two caveats.
+\begin{itemize}
+\item ``Matched'' means the same tissue sample, not the same nuclei: the snRNA-seq and snATAC-seq are separate assays.
+\item The snATAC-seq is thin in ischaemic samples: a median of 434 nuclei, with only 184 for IZ\_P16 and 267 for IZ/BZ\_P2, against about 2,000 elsewhere. snRNA-seq shows the same pattern, less extreme (a median of 3,654 nuclei in ischaemic samples against about 10,800 in controls).
+\end{itemize}
+The nuclei counts come from the authors' tables. They still need checking against the single-nucleus objects once those finish downloading.}
+
+% ------------------------------------------------------------------------
+\clearpage
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig2_cohort.pdf}
+\caption{\textbf{Cohort design.} Each point is a tissue sample, placed by patient (x) and zone (y). Filled points have a Visium section; grey bands mark patients with more than one Visium section. Time after symptom onset is not in any table that ships with the data, so it is not shown.}
+\label{fig:cohort}
+\end{figure}
+
+\paragraph{Reading.} The 28 Visium runs come from 20 patients.
+\begin{itemize}
+\item \textbf{Four patients have more than one section:} P2 (RZ/GT, RZ/BZ and IZ/BZ), P3 (RZ, RZ/BZ and IZ), P9 (RZ and two adjacent GT/IZ sections) and P15 (GT/IZ and IZ). P6 has two runs of the same remote-zone sample.
+\item \textbf{Zone and patient are therefore partly confounded.} Most patients contribute a single zone. Only P2, P3 and P9 allow comparisons between zones within one person.
+\item \textbf{Consequence for multi-sample clustering:} patient has to be treated as a grouping factor, separate from section.
+\end{itemize}
+
+% ------------------------------------------------------------------------
+\clearpage
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig3_qc_per_section.pdf}
+\caption{\textbf{Visium quality per section.} Spots on tissue, and per-spot distributions of UMIs, detected genes and the percentage of mitochondrial UMIs (box: quartiles; whiskers: 1.5$\times$IQR; outliers not drawn). Sections are ordered by zone, then by name; colours mark the zone.}
+\label{fig:qc}
+\end{figure}
+
+\paragraph{Reading.} Sections hold 1,890--4,659 spots.
+\begin{itemize}
+\item \textbf{Depth varies ninefold:} median UMIs per spot range from 954 (FZ/GT\_P4) to 8,747 (GT/IZ\_P15).
+\item \textbf{FZ/GT\_P4 is the weakest section:} median 643 genes per spot and 67\,\% mitochondrial UMIs.
+\item \textbf{Mitochondrial fraction is high throughout myogenic tissue}, with medians of 31--40\,\% in control, remote and border sections, as expected for cardiomyocytes. It falls to 11\,\% in ischaemic sections. A fixed 20\,\% filter would remove most of the healthy myocardium.
+\item \textbf{Border zone (question 2):} RZ/BZ\_P3 is the deepest of the three border sections (7,400 UMIs), RZ/BZ\_P2 is intermediate (4,904) and RZ/BZ\_P12 the shallowest (2,829). All three are usable. The full per-section table is in the appendix.
+\end{itemize}
+
+% ------------------------------------------------------------------------
+\clearpage
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig4_depth_by_zone.pdf}
+\caption{\textbf{Spot depth and estimated cellularity by zone.} Top: UMIs and genes per spot, pooled over all sections of a zone (horizontal line: median). Bottom left: estimated cells per spot, i.e.\ the sum of the shipped cell2location abundances; the axis is clipped at the 99.5th percentile. Bottom right: per section, median estimated cells against median UMIs per spot. Nuclei counts per spot from the H\&E images (VistoSeg, used in the paper) do not ship with the data.}
+\label{fig:depth}
+\end{figure}
+
+\begin{center}\resizebox{\linewidth}{!}{\input{table_zones.tex}}\end{center}
+
+\answer{Question 3.}{Yes, depth varies systematically by zone.
+\begin{itemize}
+\item \textbf{Fibrotic spots are the shallowest}, with a median of 1,797 UMIs and 1.3 estimated cells. Border and ischaemic spots are the deepest (about 4,800--5,000 UMIs).
+\item \textbf{This contradicts the expectation} that fibrotic spots, packed with small cells, would hold more cells than myocardial spots.
+\item \textbf{The cell2location estimate cannot settle the question,} because it is not independent of depth: estimated cells and UMIs correlate with Spearman $\rho = 0.84$, both per spot and per section. The only independent measure would be nuclei counted on the H\&E images, which the paper used but did not deposit.
+\item \textbf{Consequence:} any comparison between zones has to account for depth. Fibrotic sections will look different partly because they are shallower.
+\end{itemize}}
+
+% ------------------------------------------------------------------------
+\clearpage
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,height=0.78\textheight,keepaspectratio]{fig5_niches_representative.pdf}
+\caption{\textbf{Published annotations, one representative section per zone} (the section with the most spots). Left: low-resolution H\&E from Space Ranger. Middle: cell-type niches (the authors' Louvain clustering of isometric-log-ratio-transformed cell2location proportions). Right: molecular niches (the authors' Louvain clustering of log-normalized spot expression, resolution 0.2). \textbf{Neither annotation used spot coordinates.} The zone label applies to the whole section; no spot-level zone or histology annotation ships with the data.}
+\label{fig:niches}
+\end{figure}
+
+% ------------------------------------------------------------------------
+\clearpage
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig5b_niche_coherence.pdf}
+\caption{\textbf{Spatial coherence of the published niches, per section.} For each spot, the share of its (up to six) neighbouring spots on the Visium grid that carry the same niche label, averaged over the section (filled point). For comparison, the same share after shuffling the labels within the section (open point, mean of 20 shuffles), which keeps each niche's frequency but removes any spatial arrangement.}
+\label{fig:coherence}
+\end{figure}
+
+\answer{Question 4.}{Both niche sets are more spatially coherent than chance, but not contiguous.
+\begin{itemize}
+\item \textbf{Overall:} across sections, a median of 39\,\% of a spot's neighbours share its cell-type niche (25\,\% after shuffling), and 47\,\% share its molecular niche (33\,\%).
+\item \textbf{Coherence depends on the zone.} Cell-type niches are clearly coherent in ischaemic (60\,\% against 31\,\%) and fibrotic sections (43\,\% against 22\,\%). There the niches follow tissue regions visible on the H\&E (Fig.~\ref{fig:niches}). In myogenic sections they are close to chance (28--32\,\% against 23--27\,\%).
+\item \textbf{The four myogenic niches (1, 7, 8 and 9) are intermixed spot by spot.} All four are rich in cardiomyocytes.
+\item \textbf{Molecular niches are more evenly coherent} (46--60\,\%).
+\item \textbf{For project C:} this is the baseline a spatially aware clustering has to beat. Myogenic tissue is where it has the most room to differ from the published niches.
+\end{itemize}}
+
+% ------------------------------------------------------------------------
+\clearpage
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig6_composition.pdf}
+\caption{\textbf{Cell-type composition per section} from the shipped cell2location proportions (mean over spots; label colour marks the zone). Not recomputed. The shipped estimates cover 11 cell types: adipocytes, cardiomyocytes (CM), endothelial, fibroblasts (Fib), lymphoid, mast, myeloid, neuronal, pericytes (PC), proliferating cells and vascular smooth muscle cells (vSMCs).}
+\label{fig:composition}
+\end{figure}
+
+\paragraph{Reading.} Composition follows the zone as expected, and fits the authors' own figures:
+\begin{itemize}
+\item \textbf{Cardiomyocytes:} the median section share is 47\,\% in control and 45\,\% in border sections, 32\,\% in remote, and only 16--17\,\% in ischaemic and fibrotic sections.
+\item \textbf{Fibroblasts:} the median share rises from 13\,\% in control to 36\,\% in fibrotic sections.
+\item \textbf{Myeloid cells} are most prominent in ischaemic sections.
+\end{itemize}
+The comparison with the snRNA-seq composition (handoff section 3.8) is left out of this Visium-only pass.
+
+% ------------------------------------------------------------------------
+\clearpage
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig7_he_thumbnails.pdf}
+\caption{\textbf{H\&E inventory.} Low-resolution H\&E image of every Visium run, taken from the Space Ranger outputs (label colour marks the zone). The scale factors needed to place spots on the image are present for all 28 runs.}
+\label{fig:he}
+\end{figure}
+
+\answer{Question 5.}{Yes, every slide has H\&E. The images come in two forms:
+\begin{itemize}
+\item \textbf{Space Ranger outputs:} low- and high-resolution images plus their scale factors, for all 28 runs.
+\item \textbf{Full-resolution TIFFs (Zenodo 6778620):} also 28, about 0.2 GB each.
+\end{itemize}
+Every image maps to a run, with one exception. The two images for patient P6's remote zone (\texttt{Visium\_2\_CK280} and \texttt{Visium\_17\_CK295}) cannot be linked to its two runs (ACH0021 and ACH0022), because the metadata has no column connecting them. Histology is therefore available as an extra layer for every section.}
+
+% ------------------------------------------------------------------------
+\clearpage
+\section*{What was left out}\label{sec:left-out}
+These were left out to keep the pass on the Visium sections and strictly descriptive:
+\begin{itemize}
+\item \textbf{snRNA-seq and snATAC-seq figures:} quality per modality (handoff 3.3), existing embeddings and donor effect (3.7, question 6), and the snRNA-seq against Visium composition comparison (3.8). These objects were still downloading.
+\item \textbf{Time after symptom onset (3.2):} it is not in any shipped table.
+\item \textbf{The shipped PROGENy assay:} it is present in every Seurat object, but pathway activity is outside this pass.
+\end{itemize}
+Further details and naming traps are in \texttt{NOTES.md}.
+
+\section*{Appendix: all Visium sections}
+Medians per spot. ``Cells'' is the sum of the shipped cell2location abundances. ``In h5ad'' shows whether the section is in the Zenodo processed files.
+
+{\small\input{table_sections.tex}}
+
+\end{document}
