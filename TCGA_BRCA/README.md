@@ -47,6 +47,16 @@ conda activate survival
 python3 TCGA_BRCA/filter_clinical_selected.py
 ```
 
+PFI Kaplan-Meier by stage on the selected patients (`ajcc_stage` and
+`ajcc_pathologic_tumor_stage`; months, 95% CI, at-risk table, log-rank p).
+Writes `km_pfi_*.pdf/png`, `median_pfi_*.csv`, `clinical_summary_*.csv`
+(age, histology, PFI events, reverse-KM follow-up) into `clinical_out/`:
+
+```bash
+conda activate survival
+python3 TCGA_BRCA/clinical_survival_km.py
+```
+
 ## Notes
 
 - Clinical: TCGA-CDR OS + PFI; default stages II/III; primary diagnostic DX slides.
