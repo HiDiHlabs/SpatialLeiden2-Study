@@ -2,6 +2,8 @@
 
 SpaceHack 2026 track C. Branch: `hack/c-derived-modalities`.
 
+**Start here:** `handoff/HANDOFF_2026-11-24_start_here.md` (state, where the data and objects are, plan). Inferred objects per slide (MuData with rna / tf / ccc / met / spagrn and all cluster labels) are built by `02_modalities/build_mudata.py`; a copy is on the team OneDrive (see the handoff).
+
 ## Question
 
 Can functional modalities derived from gene expression act as extra layers in multimodal SpatialLeiden? Examples are pathway activity, transcription-factor activity and cell-cell signalling. We want to know:
@@ -27,6 +29,7 @@ More datasets: TBD.
 | 2 | `02_modalities/` | Derive each modality (one subfolder each) |
 | 3 | `03_single_modality_clustering/` | SpatialLeiden on each modality separately; compare the results |
 | 4 | `04_multimodal_weight_grid/` | `spatialleiden_multimodal` on combinations of modalities across a grid of layer weights |
+| 5 | `05_synergy_sis/` | Synergistic Information Score of RNA + derived layers (Richter et al. 2026) |
 | 5 | `05_evaluation/` | Domain maps, ARI all-vs-all (redundancy), metrics vs. independent readouts (gain), an example of a functional-only domain |
 | 6 | `06_metrics_exploration/` | New metrics for comparing domain maps |
 

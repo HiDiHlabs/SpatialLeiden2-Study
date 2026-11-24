@@ -1,0 +1,16 @@
+# Minimal env for 02_modalities/collectri/*.py and 02_modalities/spagrn/compare_spagrn_collectri.py.
+# Versions match the env actually used on 23 Nov 2026 (decoupler 2.2.0, scanpy 1.12, anndata 0.12,
+# Python 3.12). This file itself has not been built yet: check `python -c "import decoupler"` after
+# creating it. dc.op.collectri() downloads the CollecTRI network (internet access needed).
+name: decoupler
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - matplotlib
+  - pyarrow
+  - pip:
+      - decoupler==2.2.0
+      - scanpy==1.12.*
+      - anndata==0.12.*

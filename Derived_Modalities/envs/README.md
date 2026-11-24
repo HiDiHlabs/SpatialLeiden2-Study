@@ -4,6 +4,13 @@ Conda environment files for project C (e.g. `dmge.yml` for decoupler + LIANA+ + 
 
 Write down here any version pins or fixes needed to make an environment work.
 
+| Env | Spec | Used for |
+|---|---|---|
+| `spatialleiden` | `../../spatialleiden.yml` | clustering, figures, MuData, SIS |
+| `decoupler` | `decoupler.yml` (not yet built from this file) | CollecTRI TF activity, SpaGRN comparison |
+| `sccellfie` | `sccellfie.yml` (export of the working env) | scCellFie |
+| `spagrn` | `spagrn.yml` + patch below | SpaGRN |
+
 ## `spagrn` (built 23 November 2026)
 
 Built from `spagrn.yml`: Python 3.8, SpaGRN 1.1.4, pySCENIC 0.12.1, hotspotsc 1.1.1, scanpy 1.9.3, anndata 0.8.0, numpy 1.23.5, pandas 1.5.3, dask/distributed 2023.5.0 (2.3 GB). Jupyter kernel: "Python (spagrn)".
