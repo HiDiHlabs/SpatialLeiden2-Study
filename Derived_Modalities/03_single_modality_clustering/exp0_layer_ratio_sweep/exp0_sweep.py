@@ -167,6 +167,40 @@ def load_sccellfie_layer(data: Path, run: str) -> ad.AnnData:
     return a
 
 
+SPAGRN_MIN_NONZERO = 0.01  # drop near-empty regulons (e.g. STAT3 on P9 rep2 is ~all zero)
+
+
+def load_spagrn_layer(data: Path, run: str) -> ad.AnnData:
+    """SpaGRN regulon AUCell scores (02_modalities/spagrn) as the latent layer, in the RNA
+    h5ad barcode order; obs from the authors' spot table, obsm["spatial"] = coordinates.
+
+    Source: results/kuppe_2022/spagrn/<run>/<run>_spagrn.h5ad (obsm["auc_mtx"]); if that is
+    absent (only the MuData was copied), the "spagrn" modality of
+    data/kuppe_2022/mudata/kuppe_<run>_derived.h5mu. Regulons that are constant or non-zero
+    in fewer than SPAGRN_MIN_NONZERO of spots are dropped: z-scoring would blow their few
+    non-zero spots up into large values. Graph recipe as for TF (preprocess_tf)."""
+    h5_order = ad.read_h5ad(data / "processed1" / SLIDES[run][0], backed="r").obs_names
+    src = data.parent.parent / "results" / data.name / "spagrn" / run / f"{run}_spagrn.h5ad"
+    if src.exists():
+        auc = ad.read_h5ad(src).obsm["auc_mtx"]
+    else:
+        import mudata as md
+
+        g = md.read_h5mu(data / "mudata" / f"kuppe_{run}_derived.h5mu", backed=True)["spagrn"]
+        auc = pd.DataFrame(np.asarray(g.X[:]), index=g.obs_names, columns=g.var_names)
+    assert set(h5_order) <= set(auc.index), f"{run}: SpaGRN is missing spots of the h5ad"
+    auc = auc.loc[h5_order].astype(np.float32)
+    keep = (auc.std() > 0) & ((auc > 0).mean() >= SPAGRN_MIN_NONZERO)
+    spots = pd.read_csv(data / "visium_tables" / f"{run}_spots.csv").set_index("barcode").loc[h5_order]
+    a = ad.AnnData(X=auc.loc[:, keep].to_numpy(), obs=pd.DataFrame(index=h5_order),
+                   var=pd.DataFrame(index=[str(c) for c in auc.columns[keep]]))
+    for c in ["array_row", "array_col", "celltype_niche", "molecular_niche"]:
+        a.obs[c] = spots[c].to_numpy()
+    a.obsm["spatial"] = spots[["pxl_col_fullres", "pxl_row_fullres"]].to_numpy(float)
+    a.uns["spagrn_regulons"] = {"total": int(auc.shape[1]), "kept": int(keep.sum())}
+    return a
+
+
 def preprocess_ccc(a: ad.AnnData) -> None:
     """Graphs for the CCC layer, built like the TF ones: each pair z-scored within the slide,
     PCA (30 components, or fewer if the slide has few pairs), 15 nearest neighbours;
@@ -238,6 +272,9 @@ def run_seed(job):
     elif latent == "sccellfie":
         a = load_sccellfie_layer(data, run)
         preprocess_ccc(a)  # same recipe: z-score per feature, PCA, 15-NN, grid
+    elif latent == "spagrn":
+        a = load_spagrn_layer(data, run)
+        preprocess_ccc(a)  # TF recipe (z-score, PCA <= 30, 15-NN, grid); <= guards few regulons
     else:
         raise ValueError(f"unknown latent layer {latent}")
     ei, ej = edges(a)
@@ -433,9 +470,10 @@ def main():
     p.add_argument("--jobs", type=int, default=15)
     p.add_argument(
         "--latent",
-        choices=["rna", "collectri", "ccc", "sccellfie"],
+        choices=["rna", "collectri", "ccc", "sccellfie", "spagrn"],
         default="rna",
-        help="layer for the non-spatial graph: RNA expression (default), TF activity, CCC scores or scCellFie metabolic tasks",
+        help="layer for the non-spatial graph: RNA expression (default), TF activity, CCC scores, "
+        "scCellFie metabolic tasks or SpaGRN regulon AUCell",
     )
     p.add_argument(
         "--k-from",

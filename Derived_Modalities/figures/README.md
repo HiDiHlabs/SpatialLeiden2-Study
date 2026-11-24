@@ -7,6 +7,7 @@ PDFs are normally ignored by git in this repository. Figures here are added on p
 | Figure | Content |
 |---|---|
 | `kuppe_cohort/` | Kuppe et al. 2022 cohort: patients, zones, data types, time after symptom onset |
+| `kuppe_fig1h/` | Reproduction of Kuppe et al. 2022 Fig. 1h–j on Ctrl P7, BZ P3, IZ P3, FZ P14: cell2location proportions (h), PROGENy recomputed (i), CollecTRI TF activity standing in for TF binding (j) |
 | `kuppe_fig2b/` | Reproduction of Kuppe et al. 2022 Fig. 2b: cell-type niches on P1 (control) and P9 (IZ) |
 | `exp0_layer_ratio/` | Experiment 0: SpatialLeiden `layer_ratio` sweep on P9 rep2, P9 and P1, for four choices of the number of domains K |
 | `collectri_tf_activity/` | TF activity maps (decoupler ULM + CollecTRI) on P1 and P9, with the depth check |

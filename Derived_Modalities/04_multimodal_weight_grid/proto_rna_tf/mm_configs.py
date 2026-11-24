@@ -11,6 +11,12 @@ RNA + TF prototype figure):
     rna_ccc       RNA 1, CCC 0.5, space 0.75
     rna_met       RNA 1, metabolic 0.5, space 0.75
     rna_all       RNA 1, TF 0.5, CCC 0.5, metabolic 0.5, space 0.75
+    rna_spagrn    RNA 1, SpaGRN 0.5, space 0.75                  (24 Nov; not in the default set)
+    rna_tf_spagrn RNA 1, TF 0.5, SpaGRN 0.5, space 0.75          (24 Nov; not in the default set)
+The SpaGRN layer (regulon AUCell, exp0_sweep.load_spagrn_layer) is added to the MuData only when
+a selected config uses it: a layer at weight 0 still changes the optimiser's path, so adding it
+everywhere would change the labels of the four original configs. Run the SpaGRN configs with
+MM_CONFIGS=rna_spagrn,rna_tf_spagrn into their own folder.
 K = authors' cell-type niche count per slide; 5 seeds.
 Holding K: the shared expression resolution (RNA and the extra layers) is searched once per
 seed with all extra layers and space at weight 0 (= experiment-0 ratio-0 baseline); then the
@@ -48,9 +54,10 @@ SEEDS = [0, 1, 2, 3, 4]
 SPATIAL_W = float(os.environ.get("MM_SPATIAL_W", 0.75))  # env vars reach the spawned workers
 CONFIGS = {"rna_tf": {"tf": 0.5}, "rna_ccc": {"ccc": 0.5}, "rna_met": {"met": 0.5},
            "rna_all": {"tf": 0.5, "ccc": 0.5, "met": 0.5}}
+OPTIONAL = {"rna_spagrn": {"spagrn": 0.5}, "rna_tf_spagrn": {"tf": 0.5, "spagrn": 0.5}}
 if os.environ.get("MM_CONFIGS"):
-    CONFIGS = {c: CONFIGS[c] for c in os.environ["MM_CONFIGS"].split(",")}
-EXTRA = ["tf", "ccc", "met"]
+    CONFIGS = {c: {**CONFIGS, **OPTIONAL}[c] for c in os.environ["MM_CONFIGS"].split(",")}
+EXTRA = ["tf", "ccc", "met"] + (["spagrn"] if any("spagrn" in w for w in CONFIGS.values()) else [])
 
 
 def layer(data, run, name):
@@ -62,6 +69,9 @@ def layer(data, run, name):
         e0.preprocess_tf(a)
     elif name == "ccc":
         a = e0.load_ccc_layer(data, run)
+        e0.preprocess_ccc(a)
+    elif name == "spagrn":
+        a = e0.load_spagrn_layer(data, run)
         e0.preprocess_ccc(a)
     else:
         a = e0.load_sccellfie_layer(data, run)

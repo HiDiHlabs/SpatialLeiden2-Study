@@ -31,10 +31,18 @@ RUNS = [("RNA only", "exp0_k_celltype_niche", "r0_s{s}"), ("RNA + space", "exp0_
         ("Metabolic only", "exp0met_k_celltype_niche", "r0_s{s}"), ("Metabolic + space", "exp0met_k_celltype_niche", "r0.75_s{s}"),
         ("RNA + TF + space", "mm_configs", "rna_tf_s{s}"), ("RNA + CCC + space 0.25", "mm_configs_sp0.25", "rna_ccc_s{s}"),
         ("RNA + CCC + space 0.75", "mm_configs", "rna_ccc_s{s}"), ("RNA + metabolic + space", "mm_configs", "rna_met_s{s}"),
-        ("RNA + TF + CCC + metabolic + space", "mm_configs", "rna_all_s{s}")]
+        ("RNA + TF + CCC + metabolic + space", "mm_configs", "rna_all_s{s}"),
+        ("SpaGRN only", "exp0spagrn_k_celltype_niche", "r0_s{s}"),
+        ("SpaGRN + space", "exp0spagrn_k_celltype_niche", "r0.75_s{s}"),
+        ("RNA + SpaGRN + space", "mm_configs_spagrn", "rna_spagrn_s{s}"),
+        ("RNA + TF + SpaGRN + space", "mm_configs_spagrn", "rna_tf_spagrn_s{s}")]
 rows = []
 for name, folder, key in RUNS:
-    t = pd.read_csv(R / folder / f"labels_{RUN}.csv.gz", index_col=0, dtype=str)
+    f = R / folder / f"labels_{RUN}.csv.gz"
+    if not f.exists():
+        print(f"skipped {name}: {f} not found")
+        continue
+    t = pd.read_csv(f, index_col=0, dtype=str)
     for s in range(5):
         lab = t[key.format(s=s)]
         if lab.nunique() != 9:

@@ -4,6 +4,7 @@ The study is split over several Zenodo records. Choose what to download with
 --sets (default: the "relevant" sets below, about 82 GB):
 
     processed1   6578047  27 Visium h5ad + snRNA-seq + snATAC-seq h5ad    25.4 GB
+    visium_h5ad  6578047  only the 27 Visium h5ad of processed1            4.4 GB
     processed2   7098004  per-cell-type snRNA+snATAC objects (R .Rds)     34.1 GB
     visium_raw   6580069  Visium Space Ranger outputs + metadata          17.5 GB
     he_images    6778620  H&E images of the Visium sections + metadata     5.1 GB
@@ -16,6 +17,7 @@ Run from this folder:
     python kuppe_2022.py                         # relevant sets
     python kuppe_2022.py --sets processed1       # one set
     python kuppe_2022.py --sets atac_frag
+    python kuppe_2022.py --sets visium_h5ad visium_raw metadata   # all Visium, ~22 GB
 
 Files go to ../data/kuppe_2022/<set>/. Files already present with a matching
 checksum are skipped. The script stops if less than 50 GB would remain free.
@@ -36,6 +38,7 @@ MIN_FREE_GB = 50
 # set name -> list of (zenodo record, filter on file name)
 SETS = {
     "processed1": [("6578047", lambda n: True)],
+    "visium_h5ad": [("6578047", lambda n: n.startswith("Visium_"))],
     "processed2": [("7098004", lambda n: True)],
     "visium_raw": [("6580069", lambda n: True)],
     "he_images": [("6778620", lambda n: True)],
