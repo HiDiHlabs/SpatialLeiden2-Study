@@ -1,0 +1,16 @@
+slide,run,folder,column,domains_on_slide,coherence,ARI_vs_per_slide_23nov,ARI_vs_celltype_niche
+10X001,RNA only,exp2_joint_harmony,r0_s0,8,0.586,0.155,0.073
+10X001,RNA + space,exp2_joint_harmony,r0.75_s0,6,0.692,0.047,0.053
+10X001,TF only,exp2_joint_harmony_tf,r0_s0,8,0.23,0.567,0.015
+10X001,TF + space,exp2_joint_harmony_tf,r0.75_s0,8,0.527,0.052,0.039
+10X001,RNA + TF + space,exp3_joint_rna_tf,r0.75_s0,6,0.739,0.087,0.069
+ACH0012,RNA only,exp2_joint_harmony,r0_s0,8,0.492,0.316,0.157
+ACH0012,RNA + space,exp2_joint_harmony,r0.75_s0,6,0.806,0.389,0.16
+ACH0012,TF only,exp2_joint_harmony_tf,r0_s0,8,0.288,0.208,0.062
+ACH0012,TF + space,exp2_joint_harmony_tf,r0.75_s0,7,0.625,0.287,0.136
+ACH0012,RNA + TF + space,exp3_joint_rna_tf,r0.75_s0,6,0.698,0.388,0.173
+ACH0013,RNA only,exp2_joint_harmony,r0_s0,7,0.59,0.321,0.227
+ACH0013,RNA + space,exp2_joint_harmony,r0.75_s0,6,0.808,0.273,0.237
+ACH0013,TF only,exp2_joint_harmony_tf,r0_s0,8,0.414,0.202,0.087
+ACH0013,TF + space,exp2_joint_harmony_tf,r0.75_s0,6,0.773,0.232,0.188
+ACH0013,RNA + TF + space,exp3_joint_rna_tf,r0.75_s0,6,0.767,0.312,0.254

@@ -1,0 +1,3 @@
+seed,spatial_weight,res_expression,res_spatial,search_failed,expression_fallback,n_clusters,seconds
+0,0.0,1.0,,False,False,9,511
+0,0.75,1.0,0.8999999999999999,False,False,9,2125

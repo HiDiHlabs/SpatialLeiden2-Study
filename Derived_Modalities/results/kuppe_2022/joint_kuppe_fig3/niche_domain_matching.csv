@@ -1,0 +1,19 @@
+clustering,domain,n_spots,matched_niche,overlap_spots,stressed_CM,jaccard_with_match
+RNA + TF + space,D1,28921,molniche_1,12869,False,0.2877104339466565
+RNA + TF + space,D2,15985,molniche_3,9575,False,0.4410816288925742
+RNA + TF + space,D3,15745,molniche_5,2217,False,0.12769266213569866
+RNA + TF + space,D4,15616,molniche_2,5988,False,0.20695375682587958
+RNA + TF + space,D5,7876,molniche_4,1045,True,0.07496951000789152
+RNA + TF + space,D6,3315,molniche_11,1307,False,0.35200646377592243
+RNA + TF + space,D7,1048,molniche_12,319,False,0.19987468671679198
+RNA + TF + space,D8,164,molniche_6,26,False,0.007456266131344996
+RNA + TF + space,D9,34,molniche_10,0,False,0.0
+RNA + CCC + space,D1,25665,molniche_1,10931,False,0.25180253852710144
+RNA + CCC + space,D2,17701,molniche_3,10343,False,0.4565236581920904
+RNA + CCC + space,D3,16365,molniche_5,2612,False,0.14851879228975948
+RNA + CCC + space,D4,9296,molniche_10,564,False,0.053328290468986385
+RNA + CCC + space,D5,8857,molniche_2,3481,False,0.14103395186775788
+RNA + CCC + space,D6,7048,molniche_4,962,True,0.07291192966499924
+RNA + CCC + space,D7,2722,molniche_11,1354,False,0.4406117800195249
+RNA + CCC + space,D8,898,molniche_12,278,False,0.18695359784801613
+RNA + CCC + space,D9,152,molniche_6,18,False,0.00516795865633075

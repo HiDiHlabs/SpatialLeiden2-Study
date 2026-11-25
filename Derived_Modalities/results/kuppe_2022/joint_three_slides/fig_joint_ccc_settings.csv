@@ -1,0 +1,16 @@
+slide,run,folder,column,domains_on_slide,coherence,ARI_vs_per_slide_23nov,ARI_vs_celltype_niche
+10X001,RNA only,exp2_joint_harmony,r0_s0,8,0.586,0.155,0.073
+10X001,RNA + space,exp2_joint_harmony,r0.75_s0,6,0.692,0.047,0.053
+10X001,CCC only,exp2_joint_harmony_ccc_ours,r0_s0,6,0.602,0.058,0.013
+10X001,CCC + space 0.25,exp2_joint_harmony_ccc_ours,r0.25_s0,6,0.677,0.176,0.002
+10X001,RNA + CCC + space 0.25,exp3_joint_rna_ccc_ours,r0.25_s0,8,0.642,0.097,0.08
+ACH0012,RNA only,exp2_joint_harmony,r0_s0,8,0.492,0.316,0.157
+ACH0012,RNA + space,exp2_joint_harmony,r0.75_s0,6,0.806,0.389,0.16
+ACH0012,CCC only,exp2_joint_harmony_ccc_ours,r0_s0,6,0.68,0.152,0.008
+ACH0012,CCC + space 0.25,exp2_joint_harmony_ccc_ours,r0.25_s0,6,0.682,0.239,0.035
+ACH0012,RNA + CCC + space 0.25,exp3_joint_rna_ccc_ours,r0.25_s0,8,0.635,0.395,0.16
+ACH0013,RNA only,exp2_joint_harmony,r0_s0,7,0.59,0.321,0.227
+ACH0013,RNA + space,exp2_joint_harmony,r0.75_s0,6,0.808,0.273,0.237
+ACH0013,CCC only,exp2_joint_harmony_ccc_ours,r0_s0,6,0.8,0.128,0.041
+ACH0013,CCC + space 0.25,exp2_joint_harmony_ccc_ours,r0.25_s0,6,0.74,0.151,0.078
+ACH0013,RNA + CCC + space 0.25,exp3_joint_rna_ccc_ours,r0.25_s0,7,0.688,0.284,0.231
