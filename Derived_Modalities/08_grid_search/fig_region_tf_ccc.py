@@ -90,6 +90,11 @@ tf_rank.to_csv(OUT / "tf_ranking.csv")
 lr_rank.to_csv(OUT / "lr_ranking.csv")
 tf_top = tf_rank[tf_rank.frac_positive >= 0.75].head(12)
 lr_top = lr_rank[lr_rank.frac_positive >= 0.75].head(12)
+CONSISTENT = {"tf": len(tf_top) > 0, "lr": len(lr_top) > 0}
+if tf_top.empty:  # nothing consistent on >= 75 % of slides: show the top ranked, flagged in the title
+    tf_top = tf_rank.head(12)
+if lr_top.empty:
+    lr_top = lr_rank.head(12)
 print(f"domain on {int(tf_rank.n_slides.max())} slides (>= 2 %)")
 print("TFs:\n", tf_top.round(2).to_string())
 print("LR pairs:\n", lr_top.round(2).to_string())
@@ -158,8 +163,10 @@ for title, kind, key, cm in feat:
 fig = plt.figure(figsize=(183 * MM, 182 * MM))
 gs = fig.add_gridspec(2, 1, height_ratios=[0.85, 2.3], hspace=0.3)
 ga = gs[0].subgridspec(1, 2, wspace=0.6)
-for j, (tab, title, colr) in enumerate([(tf_top, "Top TFs (CollecTRI activity)", "#2a9d8f"),
-                                        (lr_top, "Top ligand → receptor pairs (local score)", "#9c3d54")]):
+for j, (tab, title, colr) in enumerate([(tf_top, "Top TFs (CollecTRI activity)" + ("" if CONSISTENT["tf"] else
+                                         " - none consistent on >= 75 % of slides"), "#2a9d8f"),
+                                        (lr_top, "Top ligand → receptor pairs (local score)" + ("" if CONSISTENT["lr"] else
+                                         " - none consistent"), "#9c3d54")]):
     ax = fig.add_subplot(ga[j])
     y = np.arange(len(tab))[::-1]
     ax.barh(y, tab.mean_effect, color=colr, height=0.7)
@@ -173,7 +180,7 @@ for j, (tab, title, colr) in enumerate([(tf_top, "Top TFs (CollecTRI activity)",
     ax.tick_params(labelsize=FS, length=1.5, width=0.4)
     for s_ in ("top", "right"):
         ax.spines[s_].set_visible(False)
-    ax.set_xlim(0, tab.mean_effect.max() * 1.25)
+    ax.set_xlim(min(0, tab.mean_effect.min() * 1.25), max(tab.mean_effect.max() * 1.25, 0.1))
     if j == 0:
         ax.text(-0.45, 1.05, "a", transform=ax.transAxes, fontweight="bold", fontsize=FL)
 gb = gs[1].subgridspec(len(SHOW), 2 + len(feat), wspace=0.04, hspace=0.06)
